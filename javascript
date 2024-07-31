@@ -1,24 +1,49 @@
-document.getElementById('addVideoButton').addEventListener('click', function() {
-    const videoUrl = document.getElementById('videoUrl').value;
+const videoUrlInput = document.getElementById('videoUrl');
+const addVideoButton = document.getElementById('addVideoButton');
+const videoGrid = document.getElementById('videoGrid');
+
+addVideoButton.addEventListener('click', () => {
+  const videoUrl = videoUrlInput.value;
+  if (videoUrl) {
     const videoId = extractVideoId(videoUrl);
     if (videoId) {
-        addVideoToGrid(videoId);
-        document.getElementById('videoUrl').value = ''; // Clear the input field
+      createVideoItem(videoId);
+      videoUrlInput.value = '';
     } else {
-        alert('Please enter a valid YouTube URL.');
+      alert('Invalid YouTube URL');
     }
+  }
 });
 
 function extractVideoId(url) {
-    const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=)([^&\n]+)|youtu\.be\/([^&\n]+)/;
-    const match = url.match(regex);
-    return (match && (match[1] || match[2])) ? (match[1] || match[2]) : null;
+  // Implement a function to extract the video ID from the YouTube URL
+  // You can use regular expressions or URL parsing libraries
+  // For simplicity, let's assume a basic pattern for now:
+  const match = url.match(/v=([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
 }
 
-function addVideoToGrid(videoId) {
-    const videoGrid = document.getElementById('videoGrid');
-    const videoItem = document.createElement('div');
-    videoItem.classList.add('video-item');
-    videoItem.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    videoGrid.appendChild(videoItem);
+function createVideoItem(videoId) {
+  const videoItem = document.createElement('div');
+  videoItem.classList.add('video-item');
+
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${videoId}`;   
+
+  iframe.allowFullscreen = true;
+
+  const overlay = document.createElement('div');
+  overlay.classList.add('video-overlay');
+
+  const removeButton = document.createElement('span');
+  removeButton.classList.add('remove-button');
+  removeButton.textContent = '×';
+  removeButton.addEventListener('click', () => {
+    videoGrid.removeChild(videoItem);
+  });
+
+  overlay.appendChild(removeButton);
+  videoItem.appendChild(iframe);
+  videoItem.appendChild(overlay);
+  videoGrid.appendChild(videoItem);
 }
