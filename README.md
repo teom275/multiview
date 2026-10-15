@@ -1,13 +1,15 @@
 # 🎛️ MultiView Pro — Multi-Stream & Video Grid Viewer
 
+[![Live Demo on Netlify](https://img.shields.io/badge/Live%20Demo-multivew.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://multivew.netlify.app)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-22c55e?style=for-the-badge&logo=github)](https://teom275.github.io/multiview/)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy)
-[![Platform](https://img.shields.io/badge/Platform-Web%20Browser-6366f1.svg)](#)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20(Pure%20Vanilla)-success.svg)](#)
 
 > **MultiView** is a modern, responsive web application that lets you watch multiple **YouTube** and **Twitch** streams or videos simultaneously in a customizable grid or cinema spotlight theater mode.
 
-Designed for esports enthusiasts, multi-camera live events, study sessions with lofi music, news monitoring, and multitasking.
+🚀 **Production App**: **[https://multivew.netlify.app](https://multivew.netlify.app)**  
+📌 **GitHub Pages Mirror**: [https://teom275.github.io/multiview/](https://teom275.github.io/multiview/)
 
 ---
 
@@ -65,7 +67,10 @@ MultiView includes a pre-configured `netlify.toml` with optimized caching and he
 4. Netlify will detect `netlify.toml` automatically:
    - **Build command**: *(leave blank)*
    - **Publish directory**: `.`
-5. Click **"Deploy MultiView"**. Your app will be live at a custom URL like `https://multiview-live.netlify.app` with free SSL and custom domain support!
+5. Click **"Deploy MultiView"**. Your app will be live with free SSL and custom domain support at:
+   ```
+   https://multivew.netlify.app/
+   ```
 
 ---
 
