@@ -3,17 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Video Grid</title>
+    <title>MultiView — Watch Multiple YouTube & Twitch Streams Simultaneously</title>
+    <meta name="description" content="A modern, high-performance web app to watch multiple YouTube and Twitch streams or videos simultaneously in a customizable grid or spotlight theater layout.">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20width=%2232%22%20height=%2232%22><rect width=%2214%22 height=%2214%22 x=%221%22 y=%221%22 rx=%223%22 fill=%22%236366f1%22/><rect width=%2214%22 height=%2214%22 x=%2217%22 y=%221%22 rx=%223%22 fill=%22%23a855f7%22/><rect width=%2214%22 height=%2214%22 x=%221%22 y=%2217%22 rx=%223%22 fill=%22%23ec4899%22/><rect width=%2214%22 height=%2214%22 x=%2217%22 y=%2217%22 rx=%223%22 fill=%22%2306b6d4%22/></svg>">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="input-container">
-        <input type="text" id="videoUrl" placeholder="Paste YouTube link here">
-        <button id="addVideoButton">Add Video</button>
+    <!-- Top Header & Navigation -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">MultiView</span>
+                    <span class="logo-badge">PRO</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- URL Input Center Form -->
+        <div class="header-center">
+            <form id="addVideoForm" class="input-form" autocomplete="off" onsubmit="return false;">
+                <div class="input-wrapper">
+                    <span class="input-platform-icon" id="inputPlatformIcon" title="Auto-detecting YouTube or Twitch">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                    </span>
+                    <input 
+                        type="text" 
+                        id="videoUrl" 
+                        placeholder="Paste YouTube or Twitch link (watch, live, shorts, twitch.tv/...)" 
+                        aria-label="Stream or video URL"
+                        required
+                    />
+                    <button type="button" class="btn-clear-input" id="btnClearInput" title="Clear input" style="display: none;">&times;</button>
+                </div>
+                <button type="submit" id="addVideoButton" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>Add Stream</span>
+                </button>
+                <button type="button" id="btnOpenBatchModal" class="btn btn-secondary" title="Add multiple streams at once">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <span>Batch</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Controls & Actions -->
+        <div class="header-right">
+            <!-- Layout Switcher -->
+            <div class="layout-controls" id="layoutControls" title="Change Layout">
+                <button type="button" class="layout-btn active" data-layout="auto" title="Auto Responsive Grid">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+                    <span class="btn-label">Auto</span>
+                </button>
+                <button type="button" class="layout-btn" data-layout="spotlight" title="Spotlight / Theater Mode">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="12" height="18" rx="1.5"/><rect x="17" y="3" width="4" height="8" rx="1"/><rect x="17" y="13" width="4" height="8" rx="1"/></svg>
+                    <span class="btn-label">Spotlight</span>
+                </button>
+                <button type="button" class="layout-btn" data-layout="grid-2x2" title="2x2 Quad Grid">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+                    <span class="btn-label">2&times;2</span>
+                </button>
+                <button type="button" class="layout-btn" data-layout="grid-3x3" title="3x3 Multi Grid">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="5" rx="0.5"/><rect x="9.5" y="3" width="5" height="5" rx="0.5"/><rect x="16" y="3" width="5" height="5" rx="0.5"/><rect x="3" y="9.5" width="5" height="5" rx="0.5"/><rect x="9.5" y="9.5" width="5" height="5" rx="0.5"/><rect x="16" y="9.5" width="5" height="5" rx="0.5"/><rect x="3" y="16" width="5" height="5" rx="0.5"/><rect x="9.5" y="16" width="5" height="5" rx="0.5"/><rect x="16" y="16" width="5" height="5" rx="0.5"/></svg>
+                    <span class="btn-label">3&times;3</span>
+                </button>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="action-btn-group">
+                <button type="button" id="btnPresets" class="btn btn-icon-only" title="Quick Presets">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                </button>
+                <button type="button" id="btnShare" class="btn btn-icon-only" title="Share Current MultiView Layout">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                </button>
+                <button type="button" id="btnClearAll" class="btn btn-icon-only btn-danger-ghost" title="Clear all streams">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-bar for stream stats & quick tools -->
+    <div class="status-bar" id="statusBar">
+        <div class="status-info">
+            <span class="status-dot"></span>
+            <span id="streamCountText">0 streams active</span>
+        </div>
+        <div class="status-actions">
+            <button type="button" class="status-btn" id="btnToggleAllAudio" title="Mute/Unmute quick hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="status-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <span>Sound Tip</span>
+            </button>
+            <button type="button" class="status-btn" id="btnFullscreenApp" title="Toggle full-screen app view">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="status-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                <span>Fullscreen</span>
+            </button>
+        </div>
     </div>
-    <div class="video-grid" id="videoGrid">
-        <!-- Videos will be dynamically added here -->
+
+    <!-- Main Container -->
+    <main class="main-content">
+        <!-- Empty State View -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-glow"></div>
+            <div class="empty-icon-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="hero-svg">
+                    <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <polygon points="10 8 16 11 10 14 10 8" fill="currentColor" stroke="none"></polygon>
+                </svg>
+            </div>
+            <h2>Welcome to MultiView</h2>
+            <p class="empty-subtitle">Watch multiple YouTube and Twitch streams in real time, side-by-side or in theater mode.</p>
+
+            <div class="quick-presets-chips">
+                <span class="chips-title">Try instant demo streams:</span>
+                <div class="chips-list">
+                    <button type="button" class="preset-chip" data-preset="lofi">
+                        <span class="chip-badge yt">YT</span>
+                        🎧 Lofi Girl Live
+                    </button>
+                    <button type="button" class="preset-chip" data-preset="nasa">
+                        <span class="chip-badge yt">YT</span>
+                        🚀 NASA Earth Views
+                    </button>
+                    <button type="button" class="preset-chip" data-preset="synthwave">
+                        <span class="chip-badge yt">YT</span>
+                        🎹 Synthwave Radio
+                    </button>
+                    <button type="button" class="preset-chip" data-preset="twitch-esports">
+                        <span class="chip-badge tw">Twitch</span>
+                        🎮 Twitch Gaming
+                    </button>
+                    <button type="button" class="preset-chip chip-multidemo" data-preset="quad-demo">
+                        ✨ Launch 4-Stream Quad Demo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Features Highlights Cards -->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Zero Latency & No Accounts</h3>
+                    <p>Client-side embeds run directly in your browser. Fast, lightweight, and 100% private.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Spotlight Theater Mode</h3>
+                    <p>Pin one stream as your main cinema screen while watching secondary streams on the side.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Shareable URL Layouts</h3>
+                    <p>Share your multi-stream setup with friends using a single link. Auto-saves to your browser.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Video Grid -->
+        <div class="video-grid layout-auto" id="videoGrid">
+            <!-- Dynamic stream cards inserted here via script.js -->
+        </div>
+    </main>
+
+    <!-- Batch Add Modal -->
+    <div class="modal-backdrop" id="batchModal" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="modal-icon">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <h3>Add Multiple Streams</h3>
+                </div>
+                <button type="button" class="modal-close" id="btnCloseBatchModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Paste multiple YouTube or Twitch links below (one link per line):</p>
+                <textarea id="batchTextarea" rows="6" placeholder="https://www.youtube.com/watch?v=...&#10;https://www.twitch.tv/username&#10;https://youtu.be/..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnCancelBatch">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSubmitBatch">Add All Streams</button>
+            </div>
+        </div>
     </div>
+
+    <!-- Presets Selector Modal -->
+    <div class="modal-backdrop" id="presetsModal" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="modal-icon">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <h3>Choose a Preset Pack</h3>
+                </div>
+                <button type="button" class="modal-close" id="btnClosePresetsModal">&times;</button>
+            </div>
+            <div class="modal-body presets-modal-body">
+                <div class="preset-option-card" data-preset="study-chill">
+                    <div class="preset-info">
+                        <h4>🎧 Study & Chill Vibes (2 streams)</h4>
+                        <p>Lofi Girl live stream + Chillhop relaxation radio</p>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary">Load</button>
+                </div>
+
+                <div class="preset-option-card" data-preset="space-live">
+                    <div class="preset-info">
+                        <h4>🚀 Space & Science (2 streams)</h4>
+                        <p>NASA Live Space Station + Earth from Orbit</p>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary">Load</button>
+                </div>
+
+                <div class="preset-option-card" data-preset="quad-multigenre">
+                    <div class="preset-info">
+                        <h4>🔥 4-Way Multi-Screen Experience (4 streams)</h4>
+                        <p>Lofi beats, NASA space view, Synthwave radio & Electronic music</p>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary">Load</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Link Modal -->
+    <div class="modal-backdrop" id="shareModal" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="modal-icon">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                    <h3>Share MultiView Layout</h3>
+                </div>
+                <button type="button" class="modal-close" id="btnCloseShareModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Anyone with this link will automatically load your exact streams and layout:</p>
+                <div class="share-input-group">
+                    <input type="text" id="shareUrlInput" readonly aria-label="Shareable URL" />
+                    <button type="button" class="btn btn-primary" id="btnCopyShareLink">
+                        <span>Copy</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
