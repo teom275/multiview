@@ -18,8 +18,33 @@
     const STORAGE_KEY_STREAMS = 'multiview_pro_streams';
     const STORAGE_KEY_LAYOUT = 'multiview_pro_layout';
 
-    // Catálogo Completo de Canales Argentinos (con 6 principales + alternativas conocidas)
+    // Catálogo Completo de Canales (Noticias, Finanzas, Internacional, Deportes, Creadores, Kick)
     const ARGENTINA_CATALOG = {
+        finanzas: [
+            // 6 Principales por defecto (Global Markets & Finance)
+            { id: 'bloomberg', name: 'Bloomberg Television', type: 'youtube', target: 'QB5BNdBFujE', badge: 'Live Markets (EN)', isDefault: true },
+            { id: 'yahoofinance', name: 'Yahoo Finance Live', type: 'youtube', target: 'n4O5QmWM7IE', badge: 'Market Bell (EN)', isDefault: true },
+            { id: 'cnbc', name: 'CNBC Television', type: 'youtube', target: 'h30qlVplAsE', badge: 'Stocks & Biz (EN)', isDefault: true },
+            { id: 'coindesk', name: 'CoinDesk (Crypto Markets)', type: 'youtube', target: 'SUzzPdBet10', badge: 'Bitcoin & Crypto (EN)', isDefault: true },
+            { id: 'reuters_biz', name: 'Reuters Business Live', type: 'youtube', target: 'qn9w6vrWkyQ', badge: 'Global Markets (EN)', isDefault: true },
+            { id: 'euronews_biz', name: 'Euronews Business', type: 'youtube', target: 'I9x2ocfbLDw', badge: 'Economy (EN/ES)', isDefault: true },
+            // Alternativas conocidas (Argentina y Global)
+            { id: 'ambito', name: 'Ámbito Financiero (Argentina)', type: 'youtube', target: 'ArKbAx1K-2U', badge: 'Mercados & Dólar', isDefault: false },
+            { id: 'invertironline', name: 'Invertir Online (IOL)', type: 'youtube', target: 'lV0Ks_nOdxE', badge: 'Bolsa & Finanzas', isDefault: false },
+            { id: 'ramiro_marra', name: 'Ramiro Marra (Finanzas / Mercados)', type: 'youtube', target: 'cb12KmMMDJA', badge: 'Dólar & Acciones', isDefault: false }
+        ],
+        internacional: [
+            // 6 Principales por defecto (World News 24/7)
+            { id: 'skynews', name: 'Sky News Live', type: 'youtube', target: 'YheZfqgGLHw', badge: 'World News (EN)', isDefault: true },
+            { id: 'aljazeera', name: 'Al Jazeera English', type: 'youtube', target: 'gCNeDWCI0vo', badge: 'Global Affairs (EN)', isDefault: true },
+            { id: 'dwnews', name: 'DW News (Deutsche Welle)', type: 'youtube', target: 'LuKwFajn37U', badge: 'World / Europe (EN)', isDefault: true },
+            { id: 'france24', name: 'France 24 English Live', type: 'youtube', target: 'HvZt-nh9sGg', badge: 'International (EN)', isDefault: true },
+            { id: 'abcnews', name: 'ABC News Live (US / Global)', type: 'youtube', target: 'syqrmPSmptw', badge: 'Breaking News (EN)', isDefault: true },
+            { id: 'nbcnews', name: 'NBC News NOW', type: 'youtube', target: 'DLnAwi5wQwk', badge: '24/7 News (EN)', isDefault: true },
+            // Alternativas conocidas
+            { id: 'euronews_world', name: 'Euronews English', type: 'youtube', target: 'I9x2ocfbLDw', badge: 'Europe & World (EN)', isDefault: false },
+            { id: 'reuters_news', name: 'Reuters Live News', type: 'youtube', target: 'qn9w6vrWkyQ', badge: 'World News (EN)', isDefault: false }
+        ],
         noticias: [
             // 6 Principales por defecto
             { id: 'tn', name: 'TN (Todo Noticias)', type: 'youtube', target: 'cb12KmMMDJA', badge: 'En Vivo', isDefault: true },
@@ -445,7 +470,9 @@
         const categoryNames = {
             'noticias': 'Noticias Argentina',
             'deportes': 'Deportes Argentina',
-            'creadores': 'Top Creadores AR'
+            'creadores': 'Top Creadores AR',
+            'finanzas': 'Finanzas & Mercados',
+            'internacional': 'Noticias Internacionales'
         };
 
         showToast(`¡Cargados los 6 canales de ${categoryNames[categoryKey]}! Usá el botón ⇄ en cualquier pantalla para cambiarla.`, 'success');
@@ -479,7 +506,7 @@
         let channelsToDisplay = [];
 
         if (categoryFilter === 'all') {
-            for (const catKey of ['noticias', 'deportes', 'creadores', 'kick']) {
+            for (const catKey of ['finanzas', 'internacional', 'noticias', 'deportes', 'creadores', 'kick']) {
                 channelsToDisplay = channelsToDisplay.concat(ARGENTINA_CATALOG[catKey]);
             }
         } else if (ARGENTINA_CATALOG[categoryFilter]) {

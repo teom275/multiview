@@ -39,10 +39,10 @@
                 </div>
             </div>
 
-            <!-- Botón de acceso directo a los Packs de Argentina -->
-            <button type="button" id="btnArgPacksHeader" class="btn-arg-pack" title="Abrir Packs de Noticias, Deportes y Creadores Argentinos">
-                <span>🇦🇷</span>
-                <span>Packs Argentina</span>
+            <!-- Botón de acceso directo a los Packs Temáticos -->
+            <button type="button" id="btnArgPacksHeader" class="btn-arg-pack" title="Packs de Noticias, Finanzas, Deportes y Creadores">
+                <span>✨</span>
+                <span>Packs Temáticos</span>
             </button>
         </div>
 
@@ -257,6 +257,58 @@
                             <button type="button" class="pack-btn-options" data-explore-pack="creadores" title="Ver catálogo y alternativas">Alternativas</button>
                         </div>
                     </div>
+
+                    <!-- Pack 4: Finanzas & Mercados (Finance) -->
+                    <div class="pack-card" data-pack="finanzas">
+                        <div class="pack-top">
+                            <div class="pack-icon-badge">
+                                <span class="pack-icon">📈</span>
+                                <span class="pack-channel-count" style="color: #34d399; border-color: rgba(52, 211, 153, 0.3); background: rgba(5, 46, 22, 0.4);">6 Canales Globales</span>
+                            </div>
+                            <h3>Finanzas & Mercados</h3>
+                            <p>Cobertura en vivo de Wall Street, mercados globales, cripto y economía en inglés y español.</p>
+                            <div class="pack-channel-chips">
+                                <span class="mini-chip">Bloomberg TV</span>
+                                <span class="mini-chip">Yahoo Finance</span>
+                                <span class="mini-chip">CNBC TV</span>
+                                <span class="mini-chip">CoinDesk Crypto</span>
+                                <span class="mini-chip">Reuters</span>
+                                <span class="mini-chip">Euronews Biz</span>
+                                <span class="mini-chip alternate">+ Ámbito</span>
+                                <span class="mini-chip alternate">+ IOL</span>
+                            </div>
+                        </div>
+                        <div class="pack-actions">
+                            <button type="button" class="pack-btn-load" data-load-pack="finanzas" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: #fff;">Cargar 6 Canales</button>
+                            <button type="button" class="pack-btn-options" data-explore-pack="finanzas" title="Ver catálogo y alternativas">Alternativas</button>
+                        </div>
+                    </div>
+
+                    <!-- Pack 5: Noticias Internacionales (World News) -->
+                    <div class="pack-card" data-pack="internacional">
+                        <div class="pack-top">
+                            <div class="pack-icon-badge">
+                                <span class="pack-icon">🌍</span>
+                                <span class="pack-channel-count" style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3); background: rgba(59, 7, 100, 0.4);">6 Canales Líderes</span>
+                            </div>
+                            <h3>Noticias Internacionales</h3>
+                            <p>Cadenas globales de noticias 24/7 en inglés y español con geopolítica y cobertura mundial.</p>
+                            <div class="pack-channel-chips">
+                                <span class="mini-chip">Sky News</span>
+                                <span class="mini-chip">Al Jazeera</span>
+                                <span class="mini-chip">DW News</span>
+                                <span class="mini-chip">France 24</span>
+                                <span class="mini-chip">ABC News</span>
+                                <span class="mini-chip">NBC News</span>
+                                <span class="mini-chip alternate">+ BBC</span>
+                                <span class="mini-chip alternate">+ Euronews</span>
+                            </div>
+                        </div>
+                        <div class="pack-actions">
+                            <button type="button" class="pack-btn-load" data-load-pack="internacional" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: #fff;">Cargar 6 Canales</button>
+                            <button type="button" class="pack-btn-options" data-explore-pack="internacional" title="Ver catálogo y alternativas">Alternativas</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -341,7 +393,9 @@
                 <!-- Category Filter Tabs -->
                 <div class="swap-category-tabs" id="swapCategoryTabs">
                     <button type="button" class="swap-tab-btn active" data-category="all">Todos los Canales</button>
-                    <button type="button" class="swap-tab-btn" data-category="noticias">📰 Noticias</button>
+                    <button type="button" class="swap-tab-btn" data-category="finanzas">📈 Finanzas</button>
+                    <button type="button" class="swap-tab-btn" data-category="internacional">🌍 Internacional</button>
+                    <button type="button" class="swap-tab-btn" data-category="noticias">📰 Noticias AR</button>
                     <button type="button" class="swap-tab-btn" data-category="deportes">⚽ Deportes</button>
                     <button type="button" class="swap-tab-btn" data-category="creadores">🎮 Creadores</button>
                     <button type="button" class="swap-tab-btn" data-category="kick">🟢 Kick Streamers</button>
@@ -378,14 +432,30 @@
             </div>
             <div class="modal-body">
                 <div class="presets-tabs" id="presetsTabs">
-                    <button type="button" class="preset-tab-btn active" data-tab="arg">🇦🇷 Argentina (Packs 6 canales)</button>
+                    <button type="button" class="preset-tab-btn active" data-tab="arg">✨ Packs Temáticos (6 canales c/u)</button>
                     <button type="button" class="preset-tab-btn" data-tab="world">🌐 Internacional & Relax</button>
                 </div>
 
-                <!-- Tab Argentina -->
+                <!-- Tab Argentina y Temáticos -->
                 <div class="presets-tab-content" id="tabContentArg">
                     <div class="preset-category-header">PACKS COMPLETOS DE 6 CANALES</div>
                     
+                    <div class="preset-option-card">
+                        <div class="preset-info">
+                            <h4>📈 Finanzas & Mercados (6 Canales Globales)</h4>
+                            <p>Bloomberg TV, Yahoo Finance, CNBC TV, CoinDesk Crypto, Reuters y Euronews Biz (inglés/español)</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" data-load-pack="finanzas" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">Cargar 6</button>
+                    </div>
+
+                    <div class="preset-option-card">
+                        <div class="preset-info">
+                            <h4>🌍 Noticias Internacionales (6 Cadenas Globales)</h4>
+                            <p>Sky News, Al Jazeera English, DW News, France 24, ABC News y NBC News NOW (inglés/español)</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" data-load-pack="internacional" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);">Cargar 6</button>
+                    </div>
+
                     <div class="preset-option-card">
                         <div class="preset-info">
                             <h4>📰 Noticias Argentina (6 Canales)</h4>
@@ -397,15 +467,15 @@
                     <div class="preset-option-card">
                         <div class="preset-info">
                             <h4>⚽ Deportes Argentina (6 Canales)</h4>
-                            <p>TyC Sports, Carburando, DSports Radio, Davo Xeneize, La Cobra y River Plate (con opción de cambio a Boca, Azzaro, etc.)</p>
+                            <p>TyC Sports, Carburando, DSports Radio, Davo Xeneize, La Cobra y River Plate (+ Boca, Azzaro Kick, etc.)</p>
                         </div>
                         <button type="button" class="btn btn-sm btn-primary" data-load-pack="deportes">Cargar 6</button>
                     </div>
 
                     <div class="preset-option-card">
                         <div class="preset-info">
-                            <h4>🎮 Top Creadores & Streamers AR (6 Canales)</h4>
-                            <p>Spreen, Coscu, Davo, La Cobra, Luquitas Rodríguez y Carreraaa (con opción de cambio a Momo, OLGA, LUZU, etc.)</p>
+                            <h4>🎮 Top Creadores AR (Twitch & Kick) (6 Canales)</h4>
+                            <p>Spreen, Coscu, Davo, La Cobra, Luquitas Rodríguez y Carreraaa (+ Brunenger Kick, Momo Kick, etc.)</p>
                         </div>
                         <button type="button" class="btn btn-sm btn-primary" data-load-pack="creadores">Cargar 6</button>
                     </div>

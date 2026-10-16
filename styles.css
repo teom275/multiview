@@ -572,7 +572,7 @@ body {
 
 .argentina-packs-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
     gap: 16px;
     width: 100%;
 }
@@ -607,6 +607,24 @@ body {
     border-color: #38bdf8;
     box-shadow: 0 0 24px rgba(56, 189, 248, 0.2);
     transform: translateY(-3px);
+}
+
+.pack-card[data-pack="finanzas"]::before {
+    background: linear-gradient(90deg, #10b981, #06b6d4, #10b981);
+}
+
+.pack-card[data-pack="finanzas"]:hover {
+    border-color: #10b981;
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.25);
+}
+
+.pack-card[data-pack="internacional"]::before {
+    background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1);
+}
+
+.pack-card[data-pack="internacional"]:hover {
+    border-color: #a855f7;
+    box-shadow: 0 0 24px rgba(168, 85, 247, 0.25);
 }
 
 .pack-card:hover::before {
