@@ -50,7 +50,7 @@
         <div class="header-center">
             <form id="addVideoForm" class="input-form" autocomplete="off" onsubmit="return false;">
                 <div class="input-wrapper">
-                    <span class="input-platform-icon" id="inputPlatformIcon" title="Auto-detecta YouTube o Twitch">
+                    <span class="input-platform-icon" id="inputPlatformIcon" title="Auto-detecta YouTube, Twitch o Kick">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
@@ -59,7 +59,7 @@
                     <input 
                         type="text" 
                         id="videoUrl" 
-                        placeholder="Pegar link de YouTube o Twitch (ej: youtube.com/watch?v=... o twitch.tv/...)" 
+                        placeholder="Pegar link de YouTube, Twitch o Kick (ej: kick.com/coscu, twitch.tv/..., youtube...)" 
                         aria-label="URL de stream o video"
                         required
                     />
@@ -333,6 +333,7 @@
                     <button type="button" class="swap-tab-btn" data-category="noticias">📰 Noticias</button>
                     <button type="button" class="swap-tab-btn" data-category="deportes">⚽ Deportes</button>
                     <button type="button" class="swap-tab-btn" data-category="creadores">🎮 Creadores</button>
+                    <button type="button" class="swap-tab-btn" data-category="kick">🟢 Kick Streamers</button>
                 </div>
 
                 <!-- Channels Grid -->
@@ -342,9 +343,9 @@
 
                 <!-- Custom URL section -->
                 <div class="swap-custom-section">
-                    <div class="swap-custom-title">O pegá cualquier link de YouTube o Twitch personalizado:</div>
+                    <div class="swap-custom-title">O pegá cualquier link de YouTube, Twitch o Kick:</div>
                     <form id="swapCustomForm" class="swap-custom-form" onsubmit="return false;">
-                        <input type="text" id="swapCustomInput" placeholder="https://www.youtube.com/watch?v=... o https://twitch.tv/..." />
+                        <input type="text" id="swapCustomInput" placeholder="https://kick.com/... o https://twitch.tv/... o https://youtube.com/..." />
                         <button type="submit" class="btn btn-primary" id="btnSubmitCustomSwap">Cambiar</button>
                     </form>
                 </div>

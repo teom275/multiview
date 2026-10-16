@@ -17,11 +17,11 @@
 
 - 🇦🇷 **Packs Exclusivos para Argentina (6 Canales + Alternativas)**:
   - 📰 **Noticias**: TN, C5N, LN+, Crónica HD, A24, Telefe Noticias (+ Canal 26, El Trece, TV Pública, OLGA, LUZU, Vorterix).
-  - ⚽ **Deportes**: TyC Sports, Carburando (Automovilismo), DSports Radio, Davo Xeneize, La Cobra, River Plate Oficial (+ Boca Juniors, Flavio Azzaro, ESPN, TNT Sports).
-  - 🎮 **Top Creadores AR**: Spreen, Coscu, Davo, La Cobra, Luquitas Rodríguez, Carreraaa (+ Momo, Brunenger, Goncho, Lit Killah, Robleis, OLGA, LUZU).
+  - ⚽ **Deportes**: TyC Sports, Carburando (Automovilismo), DSports Radio, Davo Xeneize, La Cobra, River Plate Oficial (+ Boca Juniors, Flavio Azzaro *El Loco y el Cuerdo* en Kick, Kun Agüero *Slakun10* en Kick, ESPN, TNT Sports).
+  - 🎮 **Top Creadores AR**: Spreen, Coscu, Davo, La Cobra, Luquitas Rodríguez, Carreraaa (+ streamers en **Kick** como Brunenger, Momo, Santutu, Kun Agüero, OLGA, LUZU).
 - ⚡ **Modo OLED True Black**: Diseñado específicamente para pantallas OLED y AMOLED con fondo negro puro `#000000` (los píxeles se apagan físicamente para contraste infinito y 0% fuga de luz).
 - ⇄ **Cambio Rápido de Canal (Swap)**: Cada pantalla cuenta con un botón `⇄` que permite reemplazar ese canal individualmente por cualquiera de las alternativas de la lista o ingresar un link nuevo sin desarmar tu muro.
-- 📺 **Multi-Platform Support**: Embebe transmisiones y videos de **YouTube** (`watch`, `live`, `shorts`, `youtu.be`, embeds o IDs) y **Twitch** simultáneamente.
+- 📺 **Multi-Platform Support (YouTube + Twitch + Kick)**: Embebe transmisiones y videos de **YouTube**, canales de **Twitch** y streams de **Kick** (`kick.com/username` o `kick:username`) simultáneamente con detección automática.
 - 🎯 **Spotlight / Modo Cine**: Fija un stream principal en pantalla grande mientras los demás quedan en miniatura al costado.
 - 📐 **Múltiples Distribuciones (Layouts)**:
   - **Auto**: Cuadrícula responsiva automática.

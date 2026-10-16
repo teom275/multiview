@@ -196,6 +196,10 @@ body {
     color: var(--twitch-purple);
 }
 
+.input-platform-icon.platform-kick {
+    color: var(--kick-green);
+}
+
 .input-wrapper input {
     width: 100%;
     background-color: #060606;
@@ -996,9 +1000,20 @@ body {
     color: #fff;
 }
 
+.badge-kick {
+    background-color: var(--kick-green);
+    color: #000000;
+    font-weight: 800;
+}
+
 .badge-generic {
     background-color: #0284c7;
     color: #fff;
+}
+
+.badge-kick-tag {
+    color: var(--kick-green) !important;
+    font-weight: 700;
 }
 
 .card-title {

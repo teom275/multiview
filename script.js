@@ -44,30 +44,51 @@
             { id: 'davo_dep', name: 'Davo Xeneize (Debate)', type: 'twitch', target: 'davoooxeneize', badge: 'Stream Fútbol', isDefault: true },
             { id: 'lacobra_dep', name: 'La Cobra (Debate)', type: 'twitch', target: 'lacobraaa', badge: 'Stream Fútbol', isDefault: true },
             { id: 'river', name: 'River Plate Oficial', type: 'youtube', target: '_ypLae9mH7U', badge: 'Club Oficial', isDefault: true },
-            // Alternativas conocidas
+            // Alternativas conocidas (Twitch, Kick y YouTube)
+            { id: 'azzaro_kick', name: 'Flavio Azzaro / El Loco y el Cuerdo (Kick)', type: 'kick', target: 'el-loco-y-el-cuerdo', badge: 'Kick Debate', isDefault: false },
+            { id: 'kun_dep_kick', name: 'Kun Agüero / Slakun10 (Kick)', type: 'kick', target: 'slakun10', badge: 'Kick Fútbol', isDefault: false },
+            { id: 'davo_kick', name: 'Davo Xeneize (Kick)', type: 'kick', target: 'davoxeneize', badge: 'Kick Fútbol', isDefault: false },
+            { id: 'lacobra_kick', name: 'La Cobra (Kick)', type: 'kick', target: 'lacobra', badge: 'Kick Fútbol', isDefault: false },
             { id: 'boca', name: 'Boca Juniors Oficial', type: 'youtube', target: 'cb12KmMMDJA', badge: 'Club Oficial', isDefault: false },
             { id: 'parenlamano', name: 'Paren La Mano (Vorterix)', type: 'twitch', target: 'vorterixoficial', badge: 'Deporte & Humor', isDefault: false },
-            { id: 'azzaro', name: 'Flavio Azzaro (El Loco y el Cuerdo)', type: 'youtube', target: 'ArKbAx1K-2U', badge: 'Debate Fútbol', isDefault: false },
+            { id: 'azzaro', name: 'Flavio Azzaro (YouTube)', type: 'youtube', target: 'ArKbAx1K-2U', badge: 'Debate Fútbol', isDefault: false },
             { id: 'espn', name: 'ESPN Fans Highlights', type: 'youtube', target: 'RDlc6UA2sGY', badge: 'Polémica', isDefault: false },
             { id: 'tntsports', name: 'TNT Sports Argentina', type: 'youtube', target: 'lV0Ks_nOdxE', badge: 'Fútbol AR', isDefault: false }
         ],
         creadores: [
             // 6 Principales por defecto
             { id: 'spreen', name: 'Spreen', type: 'twitch', target: 'spreen', badge: 'Top Twitch', isDefault: true },
-            { id: 'coscu', name: 'Coscu', type: 'twitch', target: 'coscu', badge: 'Army Leader', isDefault: true },
+            { id: 'coscu', name: 'Coscu (Twitch)', type: 'twitch', target: 'coscu', badge: 'Army Leader', isDefault: true },
             { id: 'davoooxeneize', name: 'Davo Xeneize', type: 'twitch', target: 'davoooxeneize', badge: 'Fútbol & IRL', isDefault: true },
             { id: 'lacobraaa', name: 'La Cobra', type: 'twitch', target: 'lacobraaa', badge: 'Fútbol & Gaming', isDefault: true },
             { id: 'luquitas', name: 'Luquitas Rodríguez', type: 'twitch', target: 'luquitasrodriguez', badge: 'Paren La Mano', isDefault: true },
             { id: 'carreraaa', name: 'Carreraaa', type: 'twitch', target: 'carreraaa', badge: 'Top Streamer', isDefault: true },
-            // Alternativas conocidas
-            { id: 'momo', name: 'Momo (Gerónimo Benavides)', type: 'twitch', target: 'geroman', badge: 'IRL / Streamer', isDefault: false },
-            { id: 'brunenger', name: 'Brunenger', type: 'twitch', target: 'brunenger', badge: 'IRL / Autos', isDefault: false },
+            // Alternativas conocidas en Kick, Twitch y YouTube
+            { id: 'coscu_kick', name: 'Coscu (Kick)', type: 'kick', target: 'coscu', badge: 'Kick Oficial', isDefault: false },
+            { id: 'brunenger_kick', name: 'Brunenger (Kick)', type: 'kick', target: 'brunenger', badge: 'Top Kick', isDefault: false },
+            { id: 'momo_kick', name: 'Momo (Kick)', type: 'kick', target: 'momo', badge: 'Kick', isDefault: false },
+            { id: 'santutu_kick', name: 'Santutu (Kick)', type: 'kick', target: 'santutu', badge: 'Kick', isDefault: false },
+            { id: 'slakun10_kick', name: 'Kun Agüero / Slakun10 (Kick)', type: 'kick', target: 'slakun10', badge: 'Kick Leyenda', isDefault: false },
+            { id: 'davo_cr_kick', name: 'Davo Xeneize (Kick)', type: 'kick', target: 'davoxeneize', badge: 'Kick IRL', isDefault: false },
+            { id: 'lacobra_cr_kick', name: 'La Cobra (Kick)', type: 'kick', target: 'lacobra', badge: 'Kick Gaming', isDefault: false },
+            { id: 'momo', name: 'Momo (Gerónimo Benavides - Twitch)', type: 'twitch', target: 'geroman', badge: 'IRL / Streamer', isDefault: false },
+            { id: 'brunenger', name: 'Brunenger (Twitch)', type: 'twitch', target: 'brunenger', badge: 'IRL / Autos', isDefault: false },
             { id: 'goncho', name: 'Goncho Banzas', type: 'twitch', target: 'goncho', badge: 'Gaming / IRL', isDefault: false },
             { id: 'litkillah', name: 'Lit Killah', type: 'twitch', target: 'litkillah', badge: 'Música & Stream', isDefault: false },
             { id: 'robleis', name: 'Robleis', type: 'twitch', target: 'robleis', badge: 'Gaming', isDefault: false },
             { id: 'olga_stream', name: 'OLGA (Migue Granados)', type: 'youtube', target: 'EODBiMEwilU', badge: 'Streaming No. 1', isDefault: false },
             { id: 'luzu_stream', name: 'LUZU TV (Nico Occhiato)', type: 'youtube', target: '42rWQJlio_g', badge: 'Streaming', isDefault: false },
             { id: 'vorterix_stream', name: 'Vorterix Oficial', type: 'twitch', target: 'vorterixoficial', badge: 'Radio/Stream', isDefault: false }
+        ],
+        kick: [
+            { id: 'coscu_k', name: 'Coscu', type: 'kick', target: 'coscu', badge: 'Kick Oficial', isDefault: false },
+            { id: 'brunenger_k', name: 'Brunenger', type: 'kick', target: 'brunenger', badge: 'Top Kick AR', isDefault: false },
+            { id: 'momo_k', name: 'Momo (Gerónimo Benavides)', type: 'kick', target: 'momo', badge: 'IRL / Viajes', isDefault: false },
+            { id: 'santutu_k', name: 'Santutu', type: 'kick', target: 'santutu', badge: 'Gaming / IRL', isDefault: false },
+            { id: 'davo_k', name: 'Davo Xeneize', type: 'kick', target: 'davoxeneize', badge: 'Fútbol & Debate', isDefault: false },
+            { id: 'lacobra_k', name: 'La Cobra', type: 'kick', target: 'lacobra', badge: 'Fútbol & Gaming', isDefault: false },
+            { id: 'slakun10_k', name: 'Kun Agüero (Slakun10)', type: 'kick', target: 'slakun10', badge: 'Leyenda / Watchparty', isDefault: false },
+            { id: 'azzaro_k', name: 'El Loco y el Cuerdo (Azzaro & Duka)', type: 'kick', target: 'el-loco-y-el-cuerdo', badge: 'Debate Deportivo', isDefault: false }
         ]
     };
 
@@ -246,11 +267,21 @@
             };
         }
 
-        // 3. Kick stream (bonus)
-        const kickRegex = /(?:https?:\/\/)?(?:www\.)?kick\.com\/([a-zA-Z0-9_]{3,25})(?:\/.*)?/i;
+        // 3. Kick stream
+        const kickRegex = /(?:https?:\/\/)?(?:www\.)?kick\.com\/([a-zA-Z0-9_-]{3,35})(?:\/.*)?/i;
         const kickMatch = trimmed.match(kickRegex);
+
+        let kickChannel = null;
         if (kickMatch && kickMatch[1]) {
-            const kickChannel = kickMatch[1].toLowerCase();
+            kickChannel = kickMatch[1].toLowerCase();
+        } else if (trimmed.toLowerCase().startsWith('kick:')) {
+            const raw = trimmed.substring(5).trim();
+            if (/^[a-zA-Z0-9_-]{3,35}$/.test(raw)) {
+                kickChannel = raw.toLowerCase();
+            }
+        }
+
+        if (kickChannel && !['directory', 'videos', 'categories', 'terms', 'privacy'].includes(kickChannel)) {
             return {
                 id: 'stream_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
                 type: 'kick',
@@ -393,6 +424,8 @@
             let url = ch.target;
             if (ch.type === 'twitch') {
                 url = `https://twitch.tv/${ch.target}`;
+            } else if (ch.type === 'kick') {
+                url = `https://kick.com/${ch.target}`;
             } else if (ch.type === 'youtube') {
                 url = `https://www.youtube.com/watch?v=${ch.target}`;
             }
@@ -446,7 +479,7 @@
         let channelsToDisplay = [];
 
         if (categoryFilter === 'all') {
-            for (const catKey of ['noticias', 'deportes', 'creadores']) {
+            for (const catKey of ['noticias', 'deportes', 'creadores', 'kick']) {
                 channelsToDisplay = channelsToDisplay.concat(ARGENTINA_CATALOG[catKey]);
             }
         } else if (ARGENTINA_CATALOG[categoryFilter]) {
@@ -456,10 +489,12 @@
         channelsToDisplay.forEach(ch => {
             const card = document.createElement('div');
             card.className = 'swap-channel-card';
+            const isKick = ch.type === 'kick';
+            const badgeClass = isKick ? 'swap-channel-badge badge-kick-tag' : 'swap-channel-badge';
             card.innerHTML = `
                 <div class="swap-channel-info">
                     <span class="swap-channel-name">${escapeHtml(ch.name)}</span>
-                    <span class="swap-channel-badge">${ch.type.toUpperCase()} • ${escapeHtml(ch.badge)}</span>
+                    <span class="${badgeClass}">${ch.type.toUpperCase()} • ${escapeHtml(ch.badge)}</span>
                 </div>
                 <button type="button" class="btn btn-sm btn-secondary">Elegir</button>
             `;
@@ -468,6 +503,8 @@
                 let url = ch.target;
                 if (ch.type === 'twitch') {
                     url = `https://twitch.tv/${ch.target}`;
+                } else if (ch.type === 'kick') {
+                    url = `https://kick.com/${ch.target}`;
                 } else if (ch.type === 'youtube') {
                     url = `https://www.youtube.com/watch?v=${ch.target}`;
                 }
@@ -483,7 +520,7 @@
 
         const parsed = parseStreamUrl(newUrl, newTitle);
         if (!parsed) {
-            showToast('Enlace no válido. Ingresá un link de YouTube o Twitch.', 'error');
+            showToast('Enlace no válido. Ingresá un link de YouTube, Twitch o Kick.', 'error');
             return;
         }
 
@@ -1022,6 +1059,13 @@
             elements.inputPlatformIcon.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+            `;
+        } else if (val.includes('kick.com') || val.startsWith('kick:')) {
+            elements.inputPlatformIcon.classList.add('platform-kick');
+            elements.inputPlatformIcon.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4 3h5v5.5l5.5-5.5h5.5l-7 7 7.5 11h-5.5l-5.5-8.5V21H4V3z"/>
                 </svg>
             `;
         } else {
