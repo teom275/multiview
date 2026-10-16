@@ -5,6 +5,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20(Pure%20Vanilla)-success.svg)](#)
+[![Invitame un cafecito](https://img.shields.io/badge/Cafecito-Invitame%20un%20café-FFA500?style=for-the-badge&logo=coffeescript&logoColor=white)](https://cafecito.app/napalm275)
 
 > **MultiView** is a modern, responsive web application that lets you watch multiple **YouTube** and **Twitch** streams or videos simultaneously in a customizable grid or cinema spotlight theater mode.
 
@@ -134,6 +135,16 @@ multiview/
 ├── LICENSE                     # MIT License
 └── README.md                   # Documentation & hosting guide
 ```
+
+---
+
+## ☕ Apoyar el proyecto / Donaciones
+
+Si MultiView te resultó útil para seguir noticias, deportes o a tus creadores favoritos en vivo, podés apoyar su desarrollo invitándome un cafecito:
+
+[![Invitame un café en cafecito.app](https://cdn.cafecito.app/imgs/buttons/button_5.png)](https://cafecito.app/napalm275)
+
+👉 **[cafecito.app/napalm275](https://cafecito.app/napalm275)**
 
 ---
 
