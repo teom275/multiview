@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiView — Watch Multiple YouTube & Twitch Streams Simultaneously</title>
-    <meta name="description" content="A modern, high-performance web app to watch multiple YouTube and Twitch streams or videos simultaneously in a customizable grid or spotlight theater layout.">
-    <meta name="theme-color" content="#0f172a">
+    <title>MultiView — Multi-Stream & Video Grid (OLED Edition)</title>
+    <meta name="description" content="Visualizador simultáneo de múltiples streams y canales de YouTube y Twitch en tiempo real con diseño optimizado para pantallas OLED.">
+    <meta name="theme-color" content="#000000">
     <link rel="canonical" href="https://multivew.netlify.app/">
     
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://multivew.netlify.app/">
-    <meta property="og:title" content="MultiView — Watch Multiple YouTube & Twitch Streams Simultaneously">
-    <meta property="og:description" content="Watch multiple YouTube and Twitch streams in real time with custom grid and theater layouts.">
+    <meta property="og:title" content="MultiView — Multi-Stream & Video Grid (OLED Edition)">
+    <meta property="og:description" content="Mirá múltiples canales y streams de noticias, deportes y creadores argentinos simultáneamente en vivo.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MultiView — Watch Multiple YouTube & Twitch Streams Simultaneously">
-    <meta name="twitter:description" content="Watch multiple YouTube and Twitch streams in real time with custom grid and theater layouts.">
+    <meta name="twitter:title" content="MultiView — Multi-Stream & Video Grid (OLED Edition)">
+    <meta name="twitter:description" content="Mirá múltiples canales y streams de noticias, deportes y creadores argentinos simultáneamente en vivo.">
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20width=%2232%22%20height=%2232%22><rect width=%2214%22 height=%2214%22 x=%221%22 y=%221%22 rx=%223%22 fill=%22%236366f1%22/><rect width=%2214%22 height=%2214%22 x=%2217%22 y=%221%22 rx=%223%22 fill=%22%23a855f7%22/><rect width=%2214%22 height=%2214%22 x=%221%22 y=%2217%22 rx=%223%22 fill=%22%23ec4899%22/><rect width=%2214%22 height=%2214%22 x=%2217%22 y=%2217%22 rx=%223%22 fill=%22%2306b6d4%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20width=%2232%22%20height=%2232%22><rect width=%2214%22 height=%2214%22 x=%221%22 y=%221%22 rx=%223%22 fill=%22%2338bdf8%22/><rect width=%2214%22 height=%2214%22 x=%2217%22 y=%221%22 rx=%223%22 fill=%22%23a855f7%22/><rect width=%2214%22 height=%2214%22 x=%221%22 y=%2217%22 rx=%223%22 fill=%22%23fbbf24%22/><rect width=%2214%22 height=%2214%22 x=%2217%22 y=%2217%22 rx=%223%22 fill=%22%2306b6d4%22/></svg>">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -35,16 +35,22 @@
                 </div>
                 <div class="logo-text">
                     <span class="logo-title">MultiView</span>
-                    <span class="logo-badge">PRO</span>
+                    <span class="logo-badge">OLED</span>
                 </div>
             </div>
+
+            <!-- Botón de acceso directo a los Packs de Argentina -->
+            <button type="button" id="btnArgPacksHeader" class="btn-arg-pack" title="Abrir Packs de Noticias, Deportes y Creadores Argentinos">
+                <span>🇦🇷</span>
+                <span>Packs Argentina</span>
+            </button>
         </div>
 
         <!-- URL Input Center Form -->
         <div class="header-center">
             <form id="addVideoForm" class="input-form" autocomplete="off" onsubmit="return false;">
                 <div class="input-wrapper">
-                    <span class="input-platform-icon" id="inputPlatformIcon" title="Auto-detecting YouTube or Twitch">
+                    <span class="input-platform-icon" id="inputPlatformIcon" title="Auto-detecta YouTube o Twitch">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
@@ -53,26 +59,26 @@
                     <input 
                         type="text" 
                         id="videoUrl" 
-                        placeholder="Paste YouTube or Twitch link (watch, live, shorts, twitch.tv/...)" 
-                        aria-label="Stream or video URL"
+                        placeholder="Pegar link de YouTube o Twitch (ej: youtube.com/watch?v=... o twitch.tv/...)" 
+                        aria-label="URL de stream o video"
                         required
                     />
-                    <button type="button" class="btn-clear-input" id="btnClearInput" title="Clear input" style="display: none;">&times;</button>
+                    <button type="button" class="btn-clear-input" id="btnClearInput" title="Limpiar" style="display: none;">&times;</button>
                 </div>
                 <button type="submit" id="addVideoButton" class="btn btn-primary">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>Add Stream</span>
+                    <span>Agregar</span>
                 </button>
-                <button type="button" id="btnOpenBatchModal" class="btn btn-secondary" title="Add multiple streams at once">
+                <button type="button" id="btnOpenBatchModal" class="btn btn-secondary" title="Agregar múltiples links al mismo tiempo">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
                         <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                         <polyline points="2 17 12 22 22 17"></polyline>
                         <polyline points="2 12 12 17 22 12"></polyline>
                     </svg>
-                    <span>Batch</span>
+                    <span>Lote</span>
                 </button>
             </form>
         </div>
@@ -80,20 +86,24 @@
         <!-- Controls & Actions -->
         <div class="header-right">
             <!-- Layout Switcher -->
-            <div class="layout-controls" id="layoutControls" title="Change Layout">
-                <button type="button" class="layout-btn active" data-layout="auto" title="Auto Responsive Grid">
+            <div class="layout-controls" id="layoutControls" title="Cambiar distribución de pantalla">
+                <button type="button" class="layout-btn active" data-layout="auto" title="Grid responsivo inteligente">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
                     <span class="btn-label">Auto</span>
                 </button>
-                <button type="button" class="layout-btn" data-layout="spotlight" title="Spotlight / Theater Mode">
+                <button type="button" class="layout-btn" data-layout="spotlight" title="Modo Cine / Spotlight (1 principal + laterales)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="12" height="18" rx="1.5"/><rect x="17" y="3" width="4" height="8" rx="1"/><rect x="17" y="13" width="4" height="8" rx="1"/></svg>
                     <span class="btn-label">Spotlight</span>
                 </button>
-                <button type="button" class="layout-btn" data-layout="grid-2x2" title="2x2 Quad Grid">
+                <button type="button" class="layout-btn" data-layout="grid-2x2" title="Cuadrícula 2x2 (4 pantallas)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
                     <span class="btn-label">2&times;2</span>
                 </button>
-                <button type="button" class="layout-btn" data-layout="grid-3x3" title="3x3 Multi Grid">
+                <button type="button" class="layout-btn" data-layout="grid-3x2" title="Cuadrícula 3x2 (6 pantallas - ideal packs)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="8" rx="1"/><rect x="9.5" y="3" width="5" height="8" rx="1"/><rect x="16" y="3" width="5" height="8" rx="1"/><rect x="3" y="13" width="5" height="8" rx="1"/><rect x="9.5" y="13" width="5" height="8" rx="1"/><rect x="16" y="13" width="5" height="8" rx="1"/></svg>
+                    <span class="btn-label">3&times;2</span>
+                </button>
+                <button type="button" class="layout-btn" data-layout="grid-3x3" title="Muro 3x3 (hasta 9 pantallas)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="5" rx="0.5"/><rect x="9.5" y="3" width="5" height="5" rx="0.5"/><rect x="16" y="3" width="5" height="5" rx="0.5"/><rect x="3" y="9.5" width="5" height="5" rx="0.5"/><rect x="9.5" y="9.5" width="5" height="5" rx="0.5"/><rect x="16" y="9.5" width="5" height="5" rx="0.5"/><rect x="3" y="16" width="5" height="5" rx="0.5"/><rect x="9.5" y="16" width="5" height="5" rx="0.5"/><rect x="16" y="16" width="5" height="5" rx="0.5"/></svg>
                     <span class="btn-label">3&times;3</span>
                 </button>
@@ -101,12 +111,12 @@
 
             <!-- Action buttons -->
             <div class="action-btn-group">
-                <button type="button" id="btnPresets" class="btn btn-icon-only" title="Quick Presets">
+                <button type="button" id="btnPresets" class="btn btn-icon-only" title="Explorar todos los Presets y Canales">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                     </svg>
                 </button>
-                <button type="button" id="btnShare" class="btn btn-icon-only" title="Share Current MultiView Layout">
+                <button type="button" id="btnShare" class="btn btn-icon-only" title="Compartir configuración actual por link">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="18" cy="5" r="3"></circle>
                         <circle cx="6" cy="12" r="3"></circle>
@@ -115,7 +125,7 @@
                         <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                     </svg>
                 </button>
-                <button type="button" id="btnClearAll" class="btn btn-icon-only btn-danger-ghost" title="Clear all streams">
+                <button type="button" id="btnClearAll" class="btn btn-icon-only btn-danger-ghost" title="Limpiar todas las pantallas">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="3 6 5 6 21 6"></polyline>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -125,20 +135,21 @@
         </div>
     </header>
 
-    <!-- Sub-bar for stream stats & quick tools -->
+    <!-- Sub-bar for stream stats & OLED status -->
     <div class="status-bar" id="statusBar">
         <div class="status-info">
             <span class="status-dot"></span>
-            <span id="streamCountText">0 streams active</span>
+            <span id="streamCountText">0 streams activos</span>
+            <span class="oled-badge">⚡ OLED TRUE BLACK</span>
         </div>
         <div class="status-actions">
-            <button type="button" class="status-btn" id="btnToggleAllAudio" title="Mute/Unmute quick hint">
+            <button type="button" class="status-btn" id="btnToggleAllAudio" title="Consejo sobre el audio de los navegadores">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="status-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                <span>Sound Tip</span>
+                <span>Tip Audio</span>
             </button>
-            <button type="button" class="status-btn" id="btnFullscreenApp" title="Toggle full-screen app view">
+            <button type="button" class="status-btn" id="btnFullscreenApp" title="Pantalla completa en toda la aplicación">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="status-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-                <span>Fullscreen</span>
+                <span>Pantalla Completa</span>
             </button>
         </div>
     </div>
@@ -156,19 +167,107 @@
                     <polygon points="10 8 16 11 10 14 10 8" fill="currentColor" stroke="none"></polygon>
                 </svg>
             </div>
-            <h2>Welcome to MultiView</h2>
-            <p class="empty-subtitle">Watch multiple YouTube and Twitch streams in real time, side-by-side or in theater mode.</p>
+            <h2>MultiView — Edición OLED</h2>
+            <p class="empty-subtitle">Sintonizá múltiples canales y transmisiones simultáneas en vivo con negros puros y cero sangrado de luz.</p>
 
+            <!-- Sección Destacada: Packs de Argentina (6 canales c/u + opción de cambio) -->
+            <div class="argentina-packs-container">
+                <div class="packs-header">
+                    <span>🇦🇷</span>
+                    <span class="packs-title">Packs Especiales Argentina (6 canales c/u + Alternativas)</span>
+                </div>
+                <div class="argentina-packs-grid">
+                    <!-- Pack 1: Noticias -->
+                    <div class="pack-card" data-pack="noticias">
+                        <div class="pack-top">
+                            <div class="pack-icon-badge">
+                                <span class="pack-icon">📰</span>
+                                <span class="pack-channel-count">6 Canales + 6 Alts</span>
+                            </div>
+                            <h3>Noticias Argentina</h3>
+                            <p>Las 6 señales líderes en vivo. Con el botón ⇄ podés cambiarlas por Canal 26, El Trece, TV Pública, etc.</p>
+                            <div class="pack-channel-chips">
+                                <span class="mini-chip">TN</span>
+                                <span class="mini-chip">C5N</span>
+                                <span class="mini-chip">LN+</span>
+                                <span class="mini-chip">Crónica HD</span>
+                                <span class="mini-chip">A24</span>
+                                <span class="mini-chip">Telefe</span>
+                                <span class="mini-chip alternate">+ Canal 26</span>
+                                <span class="mini-chip alternate">+ El Trece</span>
+                            </div>
+                        </div>
+                        <div class="pack-actions">
+                            <button type="button" class="pack-btn-load" data-load-pack="noticias">Cargar 6 Canales</button>
+                            <button type="button" class="pack-btn-options" data-explore-pack="noticias" title="Ver catálogo y alternativas">Alternativas</button>
+                        </div>
+                    </div>
+
+                    <!-- Pack 2: Deportes -->
+                    <div class="pack-card" data-pack="deportes">
+                        <div class="pack-top">
+                            <div class="pack-icon-badge">
+                                <span class="pack-icon">⚽</span>
+                                <span class="pack-channel-count">6 Canales + 5 Alts</span>
+                            </div>
+                            <h3>Deportes Argentina</h3>
+                            <p>Fútbol, automovilismo y debate deportivo caliente. Alterná con Boca, Azzaro, ESPN, TNT y más.</p>
+                            <div class="pack-channel-chips">
+                                <span class="mini-chip">TyC Sports</span>
+                                <span class="mini-chip">Carburando</span>
+                                <span class="mini-chip">DSports Radio</span>
+                                <span class="mini-chip">Davo Xeneize</span>
+                                <span class="mini-chip">La Cobra</span>
+                                <span class="mini-chip">River Plate</span>
+                                <span class="mini-chip alternate">+ Boca</span>
+                                <span class="mini-chip alternate">+ Azzaro</span>
+                            </div>
+                        </div>
+                        <div class="pack-actions">
+                            <button type="button" class="pack-btn-load" data-load-pack="deportes">Cargar 6 Canales</button>
+                            <button type="button" class="pack-btn-options" data-explore-pack="deportes" title="Ver catálogo y alternativas">Alternativas</button>
+                        </div>
+                    </div>
+
+                    <!-- Pack 3: Top Creadores -->
+                    <div class="pack-card" data-pack="creadores">
+                        <div class="pack-top">
+                            <div class="pack-icon-badge">
+                                <span class="pack-icon">🎮</span>
+                                <span class="pack-channel-count">6 Top + 8 Alts</span>
+                            </div>
+                            <h3>Top Creadores AR</h3>
+                            <p>Los streamers más grandes de Twitch y YouTube. Cambiá por Momo, Brunenger, OLGA, LUZU y más.</p>
+                            <div class="pack-channel-chips">
+                                <span class="mini-chip">Spreen</span>
+                                <span class="mini-chip">Coscu</span>
+                                <span class="mini-chip">Davo Xeneize</span>
+                                <span class="mini-chip">La Cobra</span>
+                                <span class="mini-chip">Luquitas R.</span>
+                                <span class="mini-chip">Carreraaa</span>
+                                <span class="mini-chip alternate">+ Momo</span>
+                                <span class="mini-chip alternate">+ OLGA</span>
+                            </div>
+                        </div>
+                        <div class="pack-actions">
+                            <button type="button" class="pack-btn-load" data-load-pack="creadores">Cargar 6 Canales</button>
+                            <button type="button" class="pack-btn-options" data-explore-pack="creadores" title="Ver catálogo y alternativas">Alternativas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chips de presets clásicos y demo -->
             <div class="quick-presets-chips">
-                <span class="chips-title">Try instant demo streams:</span>
+                <span class="chips-title">O probá demostraciones rápidas:</span>
                 <div class="chips-list">
                     <button type="button" class="preset-chip" data-preset="lofi">
                         <span class="chip-badge yt">YT</span>
-                        🎧 Lofi Girl Live
+                        🎧 Lofi Girl
                     </button>
                     <button type="button" class="preset-chip" data-preset="nasa">
                         <span class="chip-badge yt">YT</span>
-                        🚀 NASA Earth Views
+                        🚀 NASA Tierra en Vivo
                     </button>
                     <button type="button" class="preset-chip" data-preset="synthwave">
                         <span class="chip-badge yt">YT</span>
@@ -176,10 +275,10 @@
                     </button>
                     <button type="button" class="preset-chip" data-preset="twitch-esports">
                         <span class="chip-badge tw">Twitch</span>
-                        🎮 Twitch Gaming
+                        🎮 Shroud
                     </button>
                     <button type="button" class="preset-chip chip-multidemo" data-preset="quad-demo">
-                        ✨ Launch 4-Stream Quad Demo
+                        ✨ Demo Cuádruple
                     </button>
                 </div>
             </div>
@@ -188,18 +287,18 @@
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>Zero Latency & No Accounts</h3>
-                    <p>Client-side embeds run directly in your browser. Fast, lightweight, and 100% private.</p>
+                    <h3>Negros Puros OLED</h3>
+                    <p>Fondo 0% negro (#000000). Los píxeles se apagan completamente en pantallas OLED, ahorrando batería y dando contraste infinito.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Spotlight Theater Mode</h3>
-                    <p>Pin one stream as your main cinema screen while watching secondary streams on the side.</p>
+                    <div class="feature-icon">⇄</div>
+                    <h3>Cambio Inmediato de Canal</h3>
+                    <p>Cada reproductor tiene un botón ⇄ para alternar entre canales de noticias, deportes o streamers sin reiniciar tu muro.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔗</div>
-                    <h3>Shareable URL Layouts</h3>
-                    <p>Share your multi-stream setup with friends using a single link. Auto-saves to your browser.</p>
+                    <h3>Compartí por Link</h3>
+                    <p>Copiá el enlace y tus amigos abrirán exactamente los mismos canales y distribución en sus pantallas.</p>
                 </div>
             </div>
         </div>
@@ -209,6 +308,128 @@
             <!-- Dynamic stream cards inserted here via script.js -->
         </div>
     </main>
+
+    <!-- Modal: Cambiar Canal / Stream Individual (Swap) -->
+    <div class="modal-backdrop" id="swapModal" style="display: none;">
+        <div class="modal-card modal-lg">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="modal-icon">
+                        <path d="m16 3 4 4-4 4"></path>
+                        <path d="M20 7H4"></path>
+                        <path d="m8 21-4-4 4-4"></path>
+                        <path d="M4 17h16"></path>
+                    </svg>
+                    <h3 id="swapModalTitle">Cambiar Canal / Stream</h3>
+                </div>
+                <button type="button" class="modal-close" id="btnCloseSwapModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description" id="swapModalDescription">Elegí una alternativa de la lista o ingresá cualquier link para reemplazar este reproductor:</p>
+                
+                <!-- Category Filter Tabs -->
+                <div class="swap-category-tabs" id="swapCategoryTabs">
+                    <button type="button" class="swap-tab-btn active" data-category="all">Todos los Canales</button>
+                    <button type="button" class="swap-tab-btn" data-category="noticias">📰 Noticias</button>
+                    <button type="button" class="swap-tab-btn" data-category="deportes">⚽ Deportes</button>
+                    <button type="button" class="swap-tab-btn" data-category="creadores">🎮 Creadores</button>
+                </div>
+
+                <!-- Channels Grid -->
+                <div class="swap-channels-grid" id="swapChannelsGrid">
+                    <!-- Populated dynamically via script.js -->
+                </div>
+
+                <!-- Custom URL section -->
+                <div class="swap-custom-section">
+                    <div class="swap-custom-title">O pegá cualquier link de YouTube o Twitch personalizado:</div>
+                    <form id="swapCustomForm" class="swap-custom-form" onsubmit="return false;">
+                        <input type="text" id="swapCustomInput" placeholder="https://www.youtube.com/watch?v=... o https://twitch.tv/..." />
+                        <button type="submit" class="btn btn-primary" id="btnSubmitCustomSwap">Cambiar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Presets Completo -->
+    <div class="modal-backdrop" id="presetsModal" style="display: none;">
+        <div class="modal-card modal-lg">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="modal-icon">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <h3>Colección de Presets y Canales</h3>
+                </div>
+                <button type="button" class="modal-close" id="btnClosePresetsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="presets-tabs" id="presetsTabs">
+                    <button type="button" class="preset-tab-btn active" data-tab="arg">🇦🇷 Argentina (Packs 6 canales)</button>
+                    <button type="button" class="preset-tab-btn" data-tab="world">🌐 Internacional & Relax</button>
+                </div>
+
+                <!-- Tab Argentina -->
+                <div class="presets-tab-content" id="tabContentArg">
+                    <div class="preset-category-header">PACKS COMPLETOS DE 6 CANALES</div>
+                    
+                    <div class="preset-option-card">
+                        <div class="preset-info">
+                            <h4>📰 Noticias Argentina (6 Canales)</h4>
+                            <p>TN, C5N, LN+, Crónica HD, A24 y Telefe Noticias (con opción de cambio a Canal 26, El Trece, etc.)</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" data-load-pack="noticias">Cargar 6</button>
+                    </div>
+
+                    <div class="preset-option-card">
+                        <div class="preset-info">
+                            <h4>⚽ Deportes Argentina (6 Canales)</h4>
+                            <p>TyC Sports, Carburando, DSports Radio, Davo Xeneize, La Cobra y River Plate (con opción de cambio a Boca, Azzaro, etc.)</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" data-load-pack="deportes">Cargar 6</button>
+                    </div>
+
+                    <div class="preset-option-card">
+                        <div class="preset-info">
+                            <h4>🎮 Top Creadores & Streamers AR (6 Canales)</h4>
+                            <p>Spreen, Coscu, Davo, La Cobra, Luquitas Rodríguez y Carreraaa (con opción de cambio a Momo, OLGA, LUZU, etc.)</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" data-load-pack="creadores">Cargar 6</button>
+                    </div>
+                </div>
+
+                <!-- Tab World -->
+                <div class="presets-tab-content" id="tabContentWorld" style="display: none;">
+                    <div class="preset-category-header">CANALES INTERNACIONALES</div>
+
+                    <div class="preset-option-card" data-preset="study-chill">
+                        <div class="preset-info">
+                            <h4>🎧 Estudio & Chillout (2 streams)</h4>
+                            <p>Lofi Girl live stream + Synthwave radio 24/7</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary">Cargar</button>
+                    </div>
+
+                    <div class="preset-option-card" data-preset="space-live">
+                        <div class="preset-info">
+                            <h4>🚀 Ciencia & Espacio (2 streams)</h4>
+                            <p>NASA Estación Espacial Internacional + Vista en vivo de la Tierra</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary">Cargar</button>
+                    </div>
+
+                    <div class="preset-option-card" data-preset="quad-multigenre">
+                        <div class="preset-info">
+                            <h4>🔥 Muro Cuádruple Internacional (4 streams)</h4>
+                            <p>Lofi Beats, NASA Space, Synthwave & ESL Gaming</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary">Cargar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Batch Add Modal -->
     <div class="modal-backdrop" id="batchModal" style="display: none;">
@@ -220,57 +441,17 @@
                         <polyline points="2 17 12 22 22 17"></polyline>
                         <polyline points="2 12 12 17 22 12"></polyline>
                     </svg>
-                    <h3>Add Multiple Streams</h3>
+                    <h3>Agregar Varios Links por Lote</h3>
                 </div>
                 <button type="button" class="modal-close" id="btnCloseBatchModal">&times;</button>
             </div>
             <div class="modal-body">
-                <p class="modal-description">Paste multiple YouTube or Twitch links below (one link per line):</p>
-                <textarea id="batchTextarea" rows="6" placeholder="https://www.youtube.com/watch?v=...&#10;https://www.twitch.tv/username&#10;https://youtu.be/..."></textarea>
+                <p class="modal-description">Pegá múltiples enlaces de YouTube o Twitch (un link por línea):</p>
+                <textarea id="batchTextarea" rows="6" placeholder="https://www.youtube.com/watch?v=...&#10;https://www.twitch.tv/spreen&#10;https://youtu.be/..."></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="btnCancelBatch">Cancel</button>
-                <button type="button" class="btn btn-primary" id="btnSubmitBatch">Add All Streams</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Presets Selector Modal -->
-    <div class="modal-backdrop" id="presetsModal" style="display: none;">
-        <div class="modal-card">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="modal-icon">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                    </svg>
-                    <h3>Choose a Preset Pack</h3>
-                </div>
-                <button type="button" class="modal-close" id="btnClosePresetsModal">&times;</button>
-            </div>
-            <div class="modal-body presets-modal-body">
-                <div class="preset-option-card" data-preset="study-chill">
-                    <div class="preset-info">
-                        <h4>🎧 Study & Chill Vibes (2 streams)</h4>
-                        <p>Lofi Girl live stream + Chillhop relaxation radio</p>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-primary">Load</button>
-                </div>
-
-                <div class="preset-option-card" data-preset="space-live">
-                    <div class="preset-info">
-                        <h4>🚀 Space & Science (2 streams)</h4>
-                        <p>NASA Live Space Station + Earth from Orbit</p>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-primary">Load</button>
-                </div>
-
-                <div class="preset-option-card" data-preset="quad-multigenre">
-                    <div class="preset-info">
-                        <h4>🔥 4-Way Multi-Screen Experience (4 streams)</h4>
-                        <p>Lofi beats, NASA space view, Synthwave radio & Electronic music</p>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-primary">Load</button>
-                </div>
+                <button type="button" class="btn btn-secondary" id="btnCancelBatch">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnSubmitBatch">Agregar Todos</button>
             </div>
         </div>
     </div>
@@ -287,16 +468,16 @@
                         <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
                         <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                     </svg>
-                    <h3>Share MultiView Layout</h3>
+                    <h3>Compartir Configuración</h3>
                 </div>
                 <button type="button" class="modal-close" id="btnCloseShareModal">&times;</button>
             </div>
             <div class="modal-body">
-                <p class="modal-description">Anyone with this link will automatically load your exact streams and layout:</p>
+                <p class="modal-description">Cualquier persona con este link verá exactamente tus mismos canales y distribución:</p>
                 <div class="share-input-group">
-                    <input type="text" id="shareUrlInput" readonly aria-label="Shareable URL" />
+                    <input type="text" id="shareUrlInput" readonly aria-label="URL para compartir" />
                     <button type="button" class="btn btn-primary" id="btnCopyShareLink">
-                        <span>Copy</span>
+                        <span>Copiar</span>
                     </button>
                 </div>
             </div>

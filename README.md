@@ -15,25 +15,24 @@
 
 ## ✨ Features
 
-- 📺 **Multi-Platform Support**: Seamlessly embed both **YouTube** (`watch`, `live`, `shorts`, `youtu.be`, embed URLs, or raw IDs) and **Twitch** streams simultaneously.
-- 🎯 **Spotlight / Theater Mode**: Pin one primary stream to an expanded cinema screen while secondary streams flank the side.
-- 📐 **Multiple Layout Modes**:
-  - **Auto**: Intelligently fits 1 to 9+ streams responsively based on your display size.
-  - **Spotlight**: 1 large focused stream + sidebar.
-  - **2 &times; 2 Grid**: Classic 4-screen quadrant view.
-  - **3 &times; 3 Grid**: 9-screen surveillance/monitoring wall.
-- 💾 **Automatic Persistence (`localStorage`)**: Your open streams and layout preferences are saved automatically in your browser. Refreshing or returning later preserves your setup.
-- 🔗 **Instant Layout Sharing**: Generate a shareable URL containing your exact active streams and layout (`#streams=yt:id1,tw:channel2`). Send it to friends and they'll see the exact same view instantly!
-- 📦 **Batch Stream Importer**: Paste multiple stream links at once (one per line) to populate your wall in seconds.
-- 🚀 **Pre-built Presets**: Instant 1-click presets for Lofi Study Vibes, NASA Earth/Space Views, Synthwave, and Quad-stream demos.
-- 🎛️ **Per-Stream Controls**:
-  - Focus stream into Spotlight
-  - Quick reload player (fixes buffering/stream drops)
-  - Open stream directly on YouTube / Twitch in a new tab
-  - Fullscreen individual stream or fullscreen the entire app
-  - Remove stream with animated transition
-- 🎨 **Sleek Cyber / Dark Dashboard**: Built with modern CSS variables, glassmorphism, responsive 16:9 aspect ratios, and custom notification toasts (no disruptive alert popups).
-- ⚡ **Zero Runtime Dependencies**: Pure HTML5, CSS3, and modern vanilla JavaScript. No build step required, ultra-fast load times.
+- 🇦🇷 **Packs Exclusivos para Argentina (6 Canales + Alternativas)**:
+  - 📰 **Noticias**: TN, C5N, LN+, Crónica HD, A24, Telefe Noticias (+ Canal 26, El Trece, TV Pública, OLGA, LUZU, Vorterix).
+  - ⚽ **Deportes**: TyC Sports, Carburando (Automovilismo), DSports Radio, Davo Xeneize, La Cobra, River Plate Oficial (+ Boca Juniors, Flavio Azzaro, ESPN, TNT Sports).
+  - 🎮 **Top Creadores AR**: Spreen, Coscu, Davo, La Cobra, Luquitas Rodríguez, Carreraaa (+ Momo, Brunenger, Goncho, Lit Killah, Robleis, OLGA, LUZU).
+- ⚡ **Modo OLED True Black**: Diseñado específicamente para pantallas OLED y AMOLED con fondo negro puro `#000000` (los píxeles se apagan físicamente para contraste infinito y 0% fuga de luz).
+- ⇄ **Cambio Rápido de Canal (Swap)**: Cada pantalla cuenta con un botón `⇄` que permite reemplazar ese canal individualmente por cualquiera de las alternativas de la lista o ingresar un link nuevo sin desarmar tu muro.
+- 📺 **Multi-Platform Support**: Embebe transmisiones y videos de **YouTube** (`watch`, `live`, `shorts`, `youtu.be`, embeds o IDs) y **Twitch** simultáneamente.
+- 🎯 **Spotlight / Modo Cine**: Fija un stream principal en pantalla grande mientras los demás quedan en miniatura al costado.
+- 📐 **Múltiples Distribuciones (Layouts)**:
+  - **Auto**: Cuadrícula responsiva automática.
+  - **Spotlight**: 1 pantalla de cine + barra lateral.
+  - **2 &times; 2 Grid**: Cuadrícula de 4 pantallas.
+  - **3 &times; 2 Grid**: Cuadrícula de 6 pantallas (ideal para los packs de Argentina).
+  - **3 &times; 3 Grid**: Muro de monitoreo de hasta 9 pantallas.
+- 💾 **Persistencia Automática (`localStorage`)**: Tus canales y layout quedan guardados en tu navegador.
+- 🔗 **Compartir por Enlace**: Genera un link con tus canales codificados (`#streams=...`) para que cualquiera vea exactamente tu misma pantalla.
+- 📦 **Importador por Lote**: Pegá una lista de links para cargar múltiples transmisiones de una sola vez.
+- ⚡ **Zero Runtime Dependencies**: HTML5 semántico, CSS3 puro y JavaScript vanilla moderno. Sin dependencias externas ni compilación requerida.
 
 ---
 

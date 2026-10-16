@@ -1,6 +1,7 @@
 /**
- * MultiView Pro — Video Grid & Live Stream Viewer
- * Supports YouTube & Twitch simultaneously with persistence, sharing, and custom layouts.
+ * MultiView Pro — OLED Edition
+ * Soporta YouTube y Twitch simultáneamente con presets argentinos (Noticias, Deportes, Creadores),
+ * cambio individual de canal (Swap), persistencia en localStorage y enlace compartible.
  */
 
 (function () {
@@ -10,11 +11,101 @@
     const state = {
         streams: [],
         layout: 'auto',
-        spotlightId: null
+        spotlightId: null,
+        currentSwappingStreamId: null
     };
 
     const STORAGE_KEY_STREAMS = 'multiview_pro_streams';
     const STORAGE_KEY_LAYOUT = 'multiview_pro_layout';
+
+    // Catálogo Completo de Canales Argentinos (con 6 principales + alternativas conocidas)
+    const ARGENTINA_CATALOG = {
+        noticias: [
+            // 6 Principales por defecto
+            { id: 'tn', name: 'TN (Todo Noticias)', type: 'youtube', target: 'cb12KmMMDJA', badge: 'En Vivo', isDefault: true },
+            { id: 'c5n', name: 'C5N', type: 'youtube', target: 'j6oh4Kqz3UM', badge: 'En Vivo', isDefault: true },
+            { id: 'lnmas', name: 'LN+ (La Nación)', type: 'youtube', target: '_vf6ulohS-s', badge: 'En Vivo', isDefault: true },
+            { id: 'cronica', name: 'Crónica HD', type: 'youtube', target: 'hw4uHyct4vg', badge: 'En Vivo', isDefault: true },
+            { id: 'a24', name: 'A24', type: 'youtube', target: 'ArKbAx1K-2U', badge: 'En Vivo', isDefault: true },
+            { id: 'telefe', name: 'Telefe Noticias', type: 'youtube', target: 'XhAYcYpPzTc', badge: 'En Vivo', isDefault: true },
+            // Alternativas conocidas
+            { id: 'canal26', name: 'Canal 26', type: 'youtube', target: 'r0aeETOl8O4', badge: '24 Horas', isDefault: false },
+            { id: 'eltrece', name: 'El Trece', type: 'youtube', target: 'h_zyAPPJX1k', badge: 'En Vivo', isDefault: false },
+            { id: 'tvpublica', name: 'Televisión Pública', type: 'youtube', target: 'Ufzfd0-cw2g', badge: 'En Vivo', isDefault: false },
+            { id: 'olga_news', name: 'OLGA (Streaming)', type: 'youtube', target: 'EODBiMEwilU', badge: 'Streaming', isDefault: false },
+            { id: 'luzu_news', name: 'LUZU TV (Streaming)', type: 'youtube', target: '42rWQJlio_g', badge: 'Streaming', isDefault: false },
+            { id: 'vorterix_news', name: 'Vorterix', type: 'twitch', target: 'vorterixoficial', badge: 'Radio/Stream', isDefault: false }
+        ],
+        deportes: [
+            // 6 Principales por defecto
+            { id: 'tycsports', name: 'TyC Sports', type: 'youtube', target: 'lV0Ks_nOdxE', badge: 'Deportes AR', isDefault: true },
+            { id: 'carburando', name: 'Carburando (TC / Automovilismo)', type: 'youtube', target: 'RDlc6UA2sGY', badge: 'Motores', isDefault: true },
+            { id: 'dsports', name: 'DSports Radio', type: 'youtube', target: 'ky1GtPrFMek', badge: 'Fútbol/Radio', isDefault: true },
+            { id: 'davo_dep', name: 'Davo Xeneize (Debate)', type: 'twitch', target: 'davoooxeneize', badge: 'Stream Fútbol', isDefault: true },
+            { id: 'lacobra_dep', name: 'La Cobra (Debate)', type: 'twitch', target: 'lacobraaa', badge: 'Stream Fútbol', isDefault: true },
+            { id: 'river', name: 'River Plate Oficial', type: 'youtube', target: '_ypLae9mH7U', badge: 'Club Oficial', isDefault: true },
+            // Alternativas conocidas
+            { id: 'boca', name: 'Boca Juniors Oficial', type: 'youtube', target: 'cb12KmMMDJA', badge: 'Club Oficial', isDefault: false },
+            { id: 'parenlamano', name: 'Paren La Mano (Vorterix)', type: 'twitch', target: 'vorterixoficial', badge: 'Deporte & Humor', isDefault: false },
+            { id: 'azzaro', name: 'Flavio Azzaro (El Loco y el Cuerdo)', type: 'youtube', target: 'ArKbAx1K-2U', badge: 'Debate Fútbol', isDefault: false },
+            { id: 'espn', name: 'ESPN Fans Highlights', type: 'youtube', target: 'RDlc6UA2sGY', badge: 'Polémica', isDefault: false },
+            { id: 'tntsports', name: 'TNT Sports Argentina', type: 'youtube', target: 'lV0Ks_nOdxE', badge: 'Fútbol AR', isDefault: false }
+        ],
+        creadores: [
+            // 6 Principales por defecto
+            { id: 'spreen', name: 'Spreen', type: 'twitch', target: 'spreen', badge: 'Top Twitch', isDefault: true },
+            { id: 'coscu', name: 'Coscu', type: 'twitch', target: 'coscu', badge: 'Army Leader', isDefault: true },
+            { id: 'davoooxeneize', name: 'Davo Xeneize', type: 'twitch', target: 'davoooxeneize', badge: 'Fútbol & IRL', isDefault: true },
+            { id: 'lacobraaa', name: 'La Cobra', type: 'twitch', target: 'lacobraaa', badge: 'Fútbol & Gaming', isDefault: true },
+            { id: 'luquitas', name: 'Luquitas Rodríguez', type: 'twitch', target: 'luquitasrodriguez', badge: 'Paren La Mano', isDefault: true },
+            { id: 'carreraaa', name: 'Carreraaa', type: 'twitch', target: 'carreraaa', badge: 'Top Streamer', isDefault: true },
+            // Alternativas conocidas
+            { id: 'momo', name: 'Momo (Gerónimo Benavides)', type: 'twitch', target: 'geroman', badge: 'IRL / Streamer', isDefault: false },
+            { id: 'brunenger', name: 'Brunenger', type: 'twitch', target: 'brunenger', badge: 'IRL / Autos', isDefault: false },
+            { id: 'goncho', name: 'Goncho Banzas', type: 'twitch', target: 'goncho', badge: 'Gaming / IRL', isDefault: false },
+            { id: 'litkillah', name: 'Lit Killah', type: 'twitch', target: 'litkillah', badge: 'Música & Stream', isDefault: false },
+            { id: 'robleis', name: 'Robleis', type: 'twitch', target: 'robleis', badge: 'Gaming', isDefault: false },
+            { id: 'olga_stream', name: 'OLGA (Migue Granados)', type: 'youtube', target: 'EODBiMEwilU', badge: 'Streaming No. 1', isDefault: false },
+            { id: 'luzu_stream', name: 'LUZU TV (Nico Occhiato)', type: 'youtube', target: '42rWQJlio_g', badge: 'Streaming', isDefault: false },
+            { id: 'vorterix_stream', name: 'Vorterix Oficial', type: 'twitch', target: 'vorterixoficial', badge: 'Radio/Stream', isDefault: false }
+        ]
+    };
+
+    // Presets Internacionales y Demos
+    const WORLD_PRESETS = {
+        'lofi': [
+            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl - Relax/Study' }
+        ],
+        'nasa': [
+            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA ISS Live Tierra' }
+        ],
+        'synthwave': [
+            { type: 'youtube', id: '4xDzrJKXOOY', title: 'Synthwave Radio 24/7' }
+        ],
+        'twitch-esports': [
+            { type: 'twitch', id: 'shroud', title: 'Twitch: Shroud' }
+        ],
+        'quad-demo': [
+            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl' },
+            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA Earth Live' },
+            { type: 'youtube', id: '4xDzrJKXOOY', title: 'Synthwave Radio' },
+            { type: 'twitch', id: 'shroud', title: 'Twitch Shroud' }
+        ],
+        'study-chill': [
+            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl' },
+            { type: 'youtube', id: '4xDzrJKXOOY', title: 'Synthwave Chill' }
+        ],
+        'space-live': [
+            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA ISS Space Station' },
+            { type: 'youtube', id: '21X5lGlDOfg', title: 'NASA Live Media' }
+        ],
+        'quad-multigenre': [
+            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl Live' },
+            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA ISS Live' },
+            { type: 'youtube', id: '4xDzrJKXOOY', title: 'Synthwave Beats' },
+            { type: 'twitch', id: 'esl_csgo', title: 'ESL CS:GO' }
+        ]
+    };
 
     // DOM Elements
     const elements = {
@@ -34,6 +125,17 @@
         btnFullscreenApp: document.getElementById('btnFullscreenApp'),
         btnToggleAllAudio: document.getElementById('btnToggleAllAudio'),
         toastContainer: document.getElementById('toastContainer'),
+        btnArgPacksHeader: document.getElementById('btnArgPacksHeader'),
+
+        // Swap Modal
+        swapModal: document.getElementById('swapModal'),
+        swapModalTitle: document.getElementById('swapModalTitle'),
+        swapModalDescription: document.getElementById('swapModalDescription'),
+        btnCloseSwapModal: document.getElementById('btnCloseSwapModal'),
+        swapCategoryTabs: document.getElementById('swapCategoryTabs'),
+        swapChannelsGrid: document.getElementById('swapChannelsGrid'),
+        swapCustomForm: document.getElementById('swapCustomForm'),
+        swapCustomInput: document.getElementById('swapCustomInput'),
 
         // Batch Modal
         batchModal: document.getElementById('batchModal'),
@@ -46,48 +148,15 @@
         // Presets Modal
         presetsModal: document.getElementById('presetsModal'),
         btnClosePresetsModal: document.getElementById('btnClosePresetsModal'),
+        presetsTabs: document.getElementById('presetsTabs'),
+        tabContentArg: document.getElementById('tabContentArg'),
+        tabContentWorld: document.getElementById('tabContentWorld'),
 
         // Share Modal
         shareModal: document.getElementById('shareModal'),
         btnCloseShareModal: document.getElementById('btnCloseShareModal'),
         shareUrlInput: document.getElementById('shareUrlInput'),
         btnCopyShareLink: document.getElementById('btnCopyShareLink')
-    };
-
-    // Preset Collections
-    const PRESETS = {
-        'lofi': [
-            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl - beats to relax/study to' }
-        ],
-        'nasa': [
-            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA ISS Live Stream' }
-        ],
-        'synthwave': [
-            { type: 'youtube', id: '4xDzrJKXOOY', title: 'synthwave radio - chill synth / retro' }
-        ],
-        'twitch-esports': [
-            { type: 'twitch', id: 'shroud', title: 'Twitch: shroud' }
-        ],
-        'quad-demo': [
-            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl' },
-            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA Earth Live' },
-            { type: 'youtube', id: '4xDzrJKXOOY', title: 'Synthwave Radio' },
-            { type: 'twitch', id: 'shroud', title: 'Twitch Stream' }
-        ],
-        'study-chill': [
-            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl' },
-            { type: 'youtube', id: '4xDzrJKXOOY', title: 'Synthwave Chill' }
-        ],
-        'space-live': [
-            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA ISS Space Station' },
-            { type: 'youtube', id: '21X5lGlDOfg', title: 'NASA Live Media' }
-        ],
-        'quad-multigenre': [
-            { type: 'youtube', id: 'jfKfPfyJRdk', title: 'Lofi Girl Live' },
-            { type: 'youtube', id: 'P9C25Un7xaM', title: 'NASA ISS Live' },
-            { type: 'youtube', id: '4xDzrJKXOOY', title: 'Synthwave Beats' },
-            { type: 'twitch', id: 'esl_csgo', title: 'ESL CS:GO' }
-        ]
     };
 
     /* ==========================================================================
@@ -103,16 +172,14 @@
     }
 
     /**
-     * Parses input string to identify platform and channel / video ID.
-     * Returns null if invalid.
+     * Parsea un string para identificar si es YouTube o Twitch
      */
-    function parseStreamUrl(rawUrl) {
+    function parseStreamUrl(rawUrl, customTitle = null) {
         if (!rawUrl || typeof rawUrl !== 'string') return null;
         const trimmed = rawUrl.trim();
         if (!trimmed) return null;
 
-        // 1. YouTube matching
-        // Supports: watch?v=..., youtu.be/..., youtube.com/live/..., youtube.com/shorts/..., youtube.com/embed/...
+        // 1. YouTube matching (watch?v=, youtu.be/, /live/, /shorts/, /embed/)
         const ytRegex = /(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?.*v=|embed\/|v\/|live\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i;
         const ytMatch = trimmed.match(ytRegex);
 
@@ -122,7 +189,7 @@
                 id: 'stream_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
                 type: 'youtube',
                 identifier: videoId,
-                title: `YouTube: ${videoId}`,
+                title: customTitle || `YouTube: ${videoId}`,
                 embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=0&enablejsapi=1`,
                 watchUrl: `https://www.youtube.com/watch?v=${videoId}`
             };
@@ -134,14 +201,13 @@
                 id: 'stream_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
                 type: 'youtube',
                 identifier: trimmed,
-                title: `YouTube: ${trimmed}`,
+                title: customTitle || `YouTube: ${trimmed}`,
                 embedUrl: `https://www.youtube-nocookie.com/embed/${trimmed}?autoplay=1&mute=0&enablejsapi=1`,
                 watchUrl: `https://www.youtube.com/watch?v=${trimmed}`
             };
         }
 
         // 2. Twitch matching
-        // Supports: twitch.tv/channel_name or twitch:channel_name
         const twitchRegex = /(?:https?:\/\/)?(?:www\.)?twitch\.tv\/([a-zA-Z0-9_]{3,25})(?:\/.*)?/i;
         const twitchMatch = trimmed.match(twitchRegex);
 
@@ -157,23 +223,30 @@
 
         if (channelName && !['directory', 'videos', 'downloads'].includes(channelName)) {
             const parentHost = getTwitchHostParent();
-            // Parent parameter is required by Twitch player
             let twitchUrl = `https://player.twitch.tv/?channel=${channelName}&parent=${parentHost}&autoplay=true&muted=false`;
+            
+            // Parents adicionales para garantizar reproducción en Netlify y GitHub Pages
             if (parentHost !== 'localhost') {
                 twitchUrl += `&parent=localhost`;
+            }
+            if (parentHost !== 'multivew.netlify.app') {
+                twitchUrl += `&parent=multivew.netlify.app`;
+            }
+            if (parentHost !== 'teom275.github.io') {
+                twitchUrl += `&parent=teom275.github.io`;
             }
 
             return {
                 id: 'stream_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
                 type: 'twitch',
                 identifier: channelName,
-                title: `Twitch: ${channelName}`,
+                title: customTitle || `Twitch: ${channelName}`,
                 embedUrl: twitchUrl,
                 watchUrl: `https://www.twitch.tv/${channelName}`
             };
         }
 
-        // 3. Kick stream matching (bonus)
+        // 3. Kick stream (bonus)
         const kickRegex = /(?:https?:\/\/)?(?:www\.)?kick\.com\/([a-zA-Z0-9_]{3,25})(?:\/.*)?/i;
         const kickMatch = trimmed.match(kickRegex);
         if (kickMatch && kickMatch[1]) {
@@ -182,7 +255,7 @@
                 id: 'stream_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
                 type: 'kick',
                 identifier: kickChannel,
-                title: `Kick: ${kickChannel}`,
+                title: customTitle || `Kick: ${kickChannel}`,
                 embedUrl: `https://player.kick.com/${kickChannel}?autoplay=true&muted=false`,
                 watchUrl: `https://kick.com/${kickChannel}`
             };
@@ -205,7 +278,7 @@
             localStorage.setItem(STORAGE_KEY_STREAMS, JSON.stringify(serialized));
             localStorage.setItem(STORAGE_KEY_LAYOUT, state.layout);
         } catch (e) {
-            console.warn('Unable to save state to localStorage:', e);
+            console.warn('No se pudo guardar en localStorage:', e);
         }
         updateUrlHash();
     }
@@ -230,14 +303,14 @@
     }
 
     function loadState() {
-        // First check URL hash for shared streams
+        // 1. Revisar URL hash para configuraciones compartidas
         if (window.location.hash && window.location.hash.includes('streams=')) {
             try {
                 const params = new URLSearchParams(window.location.hash.substring(1));
                 const streamsParam = params.get('streams');
                 const layoutParam = params.get('layout');
 
-                if (layoutParam && ['auto', 'spotlight', 'grid-2x2', 'grid-3x3'].includes(layoutParam)) {
+                if (layoutParam && ['auto', 'spotlight', 'grid-2x2', 'grid-3x2', 'grid-3x3'].includes(layoutParam)) {
                     state.layout = layoutParam;
                 }
 
@@ -262,21 +335,21 @@
 
                     if (loaded.length > 0) {
                         state.streams = loaded;
-                        showToast(`Loaded ${loaded.length} shared streams!`, 'success');
+                        showToast(`¡Se cargaron ${loaded.length} transmisiones del enlace compartido!`, 'success');
                         return;
                     }
                 }
             } catch (err) {
-                console.warn('Error reading shared URL hash:', err);
+                console.warn('Error leyendo hash URL:', err);
             }
         }
 
-        // Otherwise load from localStorage
+        // 2. Cargar de localStorage
         try {
             const savedStreams = localStorage.getItem(STORAGE_KEY_STREAMS);
             const savedLayout = localStorage.getItem(STORAGE_KEY_LAYOUT);
 
-            if (savedLayout && ['auto', 'spotlight', 'grid-2x2', 'grid-3x3'].includes(savedLayout)) {
+            if (savedLayout && ['auto', 'spotlight', 'grid-2x2', 'grid-3x2', 'grid-3x3'].includes(savedLayout)) {
                 state.layout = savedLayout;
             }
 
@@ -286,11 +359,11 @@
                     state.streams = parsed.map(item => {
                         let reconstructed;
                         if (item.type === 'twitch') {
-                            reconstructed = parseStreamUrl(`https://twitch.tv/${item.identifier}`);
+                            reconstructed = parseStreamUrl(`https://twitch.tv/${item.identifier}`, item.title);
                         } else if (item.type === 'kick') {
-                            reconstructed = parseStreamUrl(`https://kick.com/${item.identifier}`);
+                            reconstructed = parseStreamUrl(`https://kick.com/${item.identifier}`, item.title);
                         } else {
-                            reconstructed = parseStreamUrl(item.identifier);
+                            reconstructed = parseStreamUrl(item.identifier, item.title);
                         }
                         if (reconstructed && item.title) {
                             reconstructed.title = item.title;
@@ -300,8 +373,133 @@
                 }
             }
         } catch (e) {
-            console.warn('Error reading localStorage:', e);
+            console.warn('Error leyendo localStorage:', e);
         }
+    }
+
+    /* ==========================================================================
+       Packs de Argentina & Carga de Canales
+       ========================================================================== */
+
+    function loadArgentinaPack(categoryKey) {
+        const category = ARGENTINA_CATALOG[categoryKey];
+        if (!category) return;
+
+        // Tomar los 6 marcados como isDefault
+        const defaultChannels = category.filter(c => c.isDefault);
+        const newStreams = [];
+
+        defaultChannels.forEach(ch => {
+            let url = ch.target;
+            if (ch.type === 'twitch') {
+                url = `https://twitch.tv/${ch.target}`;
+            } else if (ch.type === 'youtube') {
+                url = `https://www.youtube.com/watch?v=${ch.target}`;
+            }
+            const parsed = parseStreamUrl(url, ch.name);
+            if (parsed) {
+                newStreams.push(parsed);
+            }
+        });
+
+        state.streams = newStreams;
+        state.layout = 'grid-3x2'; // 6 canales en 3x2 en pantallas anchas
+        state.spotlightId = newStreams[0]?.id || null;
+
+        saveState();
+        render();
+
+        const categoryNames = {
+            'noticias': 'Noticias Argentina',
+            'deportes': 'Deportes Argentina',
+            'creadores': 'Top Creadores AR'
+        };
+
+        showToast(`¡Cargados los 6 canales de ${categoryNames[categoryKey]}! Usá el botón ⇄ en cualquier pantalla para cambiarla.`, 'success');
+    }
+
+    /* ==========================================================================
+       Cambio Individual de Canal (Swap)
+       ========================================================================== */
+
+    function openSwapModal(streamId) {
+        const currentStream = state.streams.find(s => s.id === streamId);
+        if (!currentStream) return;
+
+        state.currentSwappingStreamId = streamId;
+        elements.swapModalTitle.textContent = `Cambiar reproductor: ${currentStream.title}`;
+        elements.swapModalDescription.textContent = `Elegí un canal para reemplazar "${currentStream.title}" o pegá un enlace nuevo:`;
+        elements.swapCustomInput.value = '';
+
+        renderSwapChannels('all');
+        elements.swapModal.style.display = 'flex';
+        elements.swapCustomInput.focus();
+    }
+
+    function closeSwapModal() {
+        elements.swapModal.style.display = 'none';
+        state.currentSwappingStreamId = null;
+    }
+
+    function renderSwapChannels(categoryFilter = 'all') {
+        elements.swapChannelsGrid.innerHTML = '';
+        let channelsToDisplay = [];
+
+        if (categoryFilter === 'all') {
+            for (const catKey of ['noticias', 'deportes', 'creadores']) {
+                channelsToDisplay = channelsToDisplay.concat(ARGENTINA_CATALOG[catKey]);
+            }
+        } else if (ARGENTINA_CATALOG[categoryFilter]) {
+            channelsToDisplay = ARGENTINA_CATALOG[categoryFilter];
+        }
+
+        channelsToDisplay.forEach(ch => {
+            const card = document.createElement('div');
+            card.className = 'swap-channel-card';
+            card.innerHTML = `
+                <div class="swap-channel-info">
+                    <span class="swap-channel-name">${escapeHtml(ch.name)}</span>
+                    <span class="swap-channel-badge">${ch.type.toUpperCase()} • ${escapeHtml(ch.badge)}</span>
+                </div>
+                <button type="button" class="btn btn-sm btn-secondary">Elegir</button>
+            `;
+
+            card.addEventListener('click', () => {
+                let url = ch.target;
+                if (ch.type === 'twitch') {
+                    url = `https://twitch.tv/${ch.target}`;
+                } else if (ch.type === 'youtube') {
+                    url = `https://www.youtube.com/watch?v=${ch.target}`;
+                }
+                executeSwap(url, ch.name);
+            });
+
+            elements.swapChannelsGrid.appendChild(card);
+        });
+    }
+
+    function executeSwap(newUrl, newTitle = null) {
+        if (!state.currentSwappingStreamId) return;
+
+        const parsed = parseStreamUrl(newUrl, newTitle);
+        if (!parsed) {
+            showToast('Enlace no válido. Ingresá un link de YouTube o Twitch.', 'error');
+            return;
+        }
+
+        const index = state.streams.findIndex(s => s.id === state.currentSwappingStreamId);
+        if (index === -1) return;
+
+        // Mantener id del slot o reemplazar limpiamente
+        state.streams[index] = parsed;
+        if (state.spotlightId === state.currentSwappingStreamId) {
+            state.spotlightId = parsed.id;
+        }
+
+        saveState();
+        render();
+        closeSwapModal();
+        showToast(`Canal cambiado a: ${parsed.title}`, 'success');
     }
 
     /* ==========================================================================
@@ -322,15 +520,13 @@
         elements.emptyState.style.display = 'none';
         elements.videoGrid.style.display = 'grid';
 
-        // Apply layout class
+        // Aplicar clase del layout
         elements.videoGrid.className = 'video-grid layout-' + state.layout;
 
-        // If in spotlight mode and no spotlight item is set, default to first stream
         if (state.layout === 'spotlight' && (!state.spotlightId || !state.streams.some(s => s.id === state.spotlightId))) {
             state.spotlightId = state.streams[0]?.id || null;
         }
 
-        // Render card elements
         elements.videoGrid.innerHTML = '';
         state.streams.forEach((stream, index) => {
             const card = createStreamCard(stream, index);
@@ -349,7 +545,6 @@
             card.classList.add('is-spotlight');
         }
 
-        // Platform badge styling
         const badgeClass = stream.type === 'youtube' ? 'badge-youtube' : (stream.type === 'twitch' ? 'badge-twitch' : 'badge-generic');
         const badgeLabel = stream.type === 'youtube' ? 'YouTube' : (stream.type === 'twitch' ? 'Twitch' : 'Kick');
 
@@ -360,19 +555,22 @@
                     <span class="card-title" title="${escapeHtml(stream.title)}">${escapeHtml(stream.title)}</span>
                 </div>
                 <div class="card-actions">
-                    <button type="button" class="card-btn btn-spotlight ${isSpotlight ? 'active-spotlight' : ''}" title="${isSpotlight ? 'In Spotlight' : 'Focus in Spotlight / Cinema Mode'}">
+                    <button type="button" class="card-btn btn-swap" title="Cambiar este canal por otro de la lista (Swap)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+                    </button>
+                    <button type="button" class="card-btn btn-spotlight ${isSpotlight ? 'active-spotlight' : ''}" title="${isSpotlight ? 'Enfocado en Spotlight' : 'Modo Cine / Spotlight'}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     </button>
-                    <button type="button" class="card-btn btn-reload" title="Reload stream player">
+                    <button type="button" class="card-btn btn-reload" title="Recargar reproductor">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
                     </button>
-                    <button type="button" class="card-btn btn-external" title="Open on ${badgeLabel}">
+                    <button type="button" class="card-btn btn-external" title="Abrir en ${badgeLabel}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     </button>
-                    <button type="button" class="card-btn btn-fullscreen" title="Fullscreen this video">
+                    <button type="button" class="card-btn btn-fullscreen" title="Pantalla completa">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
                     </button>
-                    <button type="button" class="card-btn btn-remove" title="Remove stream">
+                    <button type="button" class="card-btn btn-remove" title="Quitar stream">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
@@ -388,14 +586,19 @@
             </div>
         `;
 
-        // Attach Card Button Event Listeners
+        // Eventos en botones de la tarjeta
+        const btnSwap = card.querySelector('.btn-swap');
+        btnSwap.addEventListener('click', () => {
+            openSwapModal(stream.id);
+        });
+
         const btnSpotlight = card.querySelector('.btn-spotlight');
         btnSpotlight.addEventListener('click', () => {
             state.layout = 'spotlight';
             state.spotlightId = stream.id;
             saveState();
             render();
-            showToast(`Spotlight focused: ${stream.title}`, 'info');
+            showToast(`Spotlight enfocado: ${stream.title}`, 'info');
         });
 
         const btnReload = card.querySelector('.btn-reload');
@@ -407,7 +610,7 @@
                 setTimeout(() => {
                     iframe.src = currentSrc;
                 }, 100);
-                showToast(`Reloaded ${stream.title}`, 'info');
+                showToast(`Recargando ${stream.title}`, 'info');
             }
         });
 
@@ -443,20 +646,19 @@
         }
         saveState();
         render();
-        showToast('Stream removed', 'info');
+        showToast('Stream quitado', 'info');
     }
 
     function addSingleStream(rawUrl, showNotification = true) {
         const parsed = parseStreamUrl(rawUrl);
         if (!parsed) {
-            showToast('Invalid URL. Enter a valid YouTube or Twitch link.', 'error');
+            showToast('URL inválida. Ingresá un link de YouTube o Twitch válido.', 'error');
             return false;
         }
 
-        // Avoid adding exact duplicate
         const exists = state.streams.some(s => s.type === parsed.type && s.identifier === parsed.identifier);
         if (exists) {
-            showToast('This stream is already in your grid!', 'info');
+            showToast('¡Este canal ya está en la pantalla!', 'info');
             return false;
         }
 
@@ -465,7 +667,7 @@
         render();
 
         if (showNotification) {
-            showToast(`Added ${parsed.title}!`, 'success');
+            showToast(`¡Se agregó ${parsed.title}!`, 'success');
         }
         return true;
     }
@@ -489,14 +691,14 @@
         if (addedCount > 0) {
             saveState();
             render();
-            showToast(`Successfully added ${addedCount} stream(s)!`, 'success');
+            showToast(`¡Se agregaron ${addedCount} canales con éxito!`, 'success');
         } else {
-            showToast('No new valid streams found to add.', 'error');
+            showToast('No se encontraron canales nuevos válidos para agregar.', 'error');
         }
     }
 
-    function loadPreset(presetKey) {
-        const list = PRESETS[presetKey];
+    function loadWorldPreset(presetKey) {
+        const list = WORLD_PRESETS[presetKey];
         if (!list) return;
 
         let addedCount = 0;
@@ -508,9 +710,8 @@
                 url = `https://youtube.com/watch?v=${item.id}`;
             }
 
-            const parsed = parseStreamUrl(url);
+            const parsed = parseStreamUrl(url, item.title);
             if (parsed) {
-                if (item.title) parsed.title = item.title;
                 const exists = state.streams.some(s => s.type === parsed.type && s.identifier === parsed.identifier);
                 if (!exists) {
                     state.streams.push(parsed);
@@ -521,7 +722,7 @@
 
         saveState();
         render();
-        showToast(`Loaded ${addedCount} preset streams!`, 'success');
+        showToast(`¡Se cargaron ${addedCount} transmisiones del preset!`, 'success');
     }
 
     function updateLayoutButtons() {
@@ -536,7 +737,7 @@
 
     function updateStatusBar() {
         const count = state.streams.length;
-        elements.streamCountText.textContent = `${count} stream${count === 1 ? '' : 's'} active`;
+        elements.streamCountText.textContent = `${count} canal${count === 1 ? '' : 'es'} activo${count === 1 ? '' : 's'}`;
     }
 
     /* ==========================================================================
@@ -553,7 +754,7 @@
         } else if (type === 'error') {
             iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
         } else {
-            iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+            iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
         }
 
         toast.innerHTML = `${iconSvg}<span>${escapeHtml(message)}</span>`;
@@ -562,20 +763,6 @@
         setTimeout(() => {
             toast.remove();
         }, 3600);
-    }
-
-    /* ==========================================================================
-       Modals & Input Handling
-       ========================================================================== */
-
-    function openModal(modalEl) {
-        if (!modalEl) return;
-        modalEl.style.display = 'flex';
-    }
-
-    function closeModal(modalEl) {
-        if (!modalEl) return;
-        modalEl.style.display = 'none';
     }
 
     function escapeHtml(str) {
@@ -607,7 +794,7 @@
             }
         });
 
-        // Input live change detection for YouTube vs Twitch
+        // Input platform detect
         elements.videoUrlInput.addEventListener('input', (e) => {
             const val = e.target.value;
             elements.btnClearInput.style.display = val ? 'block' : 'none';
@@ -633,86 +820,144 @@
             }
         });
 
-        // Clear All streams button
+        // Clear all
         elements.btnClearAll.addEventListener('click', () => {
             if (state.streams.length === 0) return;
-            if (confirm('Are you sure you want to remove all streams from the grid?')) {
+            if (confirm('¿Seguro que querés quitar todas las transmisiones de la pantalla?')) {
                 state.streams = [];
                 state.spotlightId = null;
                 saveState();
                 render();
-                showToast('All streams cleared', 'info');
+                showToast('Se limpiaron todas las pantallas', 'info');
+            }
+        });
+
+        // Botón Packs Argentina en Header
+        if (elements.btnArgPacksHeader) {
+            elements.btnArgPacksHeader.addEventListener('click', () => {
+                elements.presetsModal.style.display = 'flex';
+                // Activar pestaña Argentina
+                activatePresetTab('arg');
+            });
+        }
+
+        // Swap Modal handlers
+        elements.btnCloseSwapModal.addEventListener('click', closeSwapModal);
+
+        elements.swapCategoryTabs.addEventListener('click', (e) => {
+            const btn = e.target.closest('.swap-tab-btn');
+            if (!btn) return;
+            elements.swapCategoryTabs.querySelectorAll('.swap-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSwapChannels(btn.dataset.category);
+        });
+
+        elements.swapCustomForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = elements.swapCustomInput.value;
+            if (val) {
+                executeSwap(val);
+            }
+        });
+
+        // Eventos en Empty State para los Packs de Argentina
+        elements.emptyState.addEventListener('click', (e) => {
+            // Cargar pack completo
+            const loadBtn = e.target.closest('[data-load-pack]');
+            if (loadBtn) {
+                loadArgentinaPack(loadBtn.dataset.loadPack);
+                return;
+            }
+
+            // Explorar alternativas del pack
+            const exploreBtn = e.target.closest('[data-explore-pack]');
+            if (exploreBtn) {
+                elements.presetsModal.style.display = 'flex';
+                activatePresetTab('arg');
+                return;
+            }
+
+            // Presets demo
+            const chip = e.target.closest('.preset-chip');
+            if (chip && chip.dataset.preset) {
+                loadWorldPreset(chip.dataset.preset);
             }
         });
 
         // Batch Modal handlers
         elements.btnOpenBatchModal.addEventListener('click', () => {
             elements.batchTextarea.value = '';
-            openModal(elements.batchModal);
+            elements.batchModal.style.display = 'flex';
             elements.batchTextarea.focus();
         });
-        elements.btnCloseBatchModal.addEventListener('click', () => closeModal(elements.batchModal));
-        elements.btnCancelBatch.addEventListener('click', () => closeModal(elements.batchModal));
+        elements.btnCloseBatchModal.addEventListener('click', () => elements.batchModal.style.display = 'none');
+        elements.btnCancelBatch.addEventListener('click', () => elements.batchModal.style.display = 'none');
         elements.btnSubmitBatch.addEventListener('click', () => {
             const text = elements.batchTextarea.value;
             if (text.trim()) {
                 addBatchStreams(text);
-                closeModal(elements.batchModal);
+                elements.batchModal.style.display = 'none';
             }
         });
 
         // Presets Modal handlers
         elements.btnPresets.addEventListener('click', () => {
-            openModal(elements.presetsModal);
+            elements.presetsModal.style.display = 'flex';
         });
-        elements.btnClosePresetsModal.addEventListener('click', () => closeModal(elements.presetsModal));
+        elements.btnClosePresetsModal.addEventListener('click', () => elements.presetsModal.style.display = 'none');
+
+        // Presets Tabs (Argentina vs Internacional)
+        elements.presetsTabs.addEventListener('click', (e) => {
+            const btn = e.target.closest('.preset-tab-btn');
+            if (!btn) return;
+            activatePresetTab(btn.dataset.tab);
+        });
 
         // Presets option clicks in modal
         elements.presetsModal.addEventListener('click', (e) => {
-            const card = e.target.closest('.preset-option-card');
-            if (card && card.dataset.preset) {
-                loadPreset(card.dataset.preset);
-                closeModal(elements.presetsModal);
+            const loadArgBtn = e.target.closest('[data-load-pack]');
+            if (loadArgBtn) {
+                loadArgentinaPack(loadArgBtn.dataset.loadPack);
+                elements.presetsModal.style.display = 'none';
+                return;
             }
-        });
 
-        // Empty state quick chips
-        elements.emptyState.addEventListener('click', (e) => {
-            const chip = e.target.closest('.preset-chip');
-            if (chip && chip.dataset.preset) {
-                loadPreset(chip.dataset.preset);
+            const worldCard = e.target.closest('[data-preset]');
+            if (worldCard && worldCard.dataset.preset) {
+                loadWorldPreset(worldCard.dataset.preset);
+                elements.presetsModal.style.display = 'none';
             }
         });
 
         // Share Modal & URL Generation
         elements.btnShare.addEventListener('click', () => {
             if (state.streams.length === 0) {
-                showToast('Add some streams before sharing!', 'info');
+                showToast('¡Agregá canales antes de compartir!', 'info');
                 return;
             }
 
             updateUrlHash();
             elements.shareUrlInput.value = window.location.href;
-            openModal(elements.shareModal);
+            elements.shareModal.style.display = 'flex';
             elements.shareUrlInput.select();
         });
 
-        elements.btnCloseShareModal.addEventListener('click', () => closeModal(elements.shareModal));
+        elements.btnCloseShareModal.addEventListener('click', () => elements.shareModal.style.display = 'none');
 
         elements.btnCopyShareLink.addEventListener('click', async () => {
             try {
                 await navigator.clipboard.writeText(elements.shareUrlInput.value);
-                showToast('Link copied to clipboard!', 'success');
-                closeModal(elements.shareModal);
+                showToast('¡Enlace copiado al portapapeles!', 'success');
+                elements.shareModal.style.display = 'none';
             } catch (err) {
                 elements.shareUrlInput.select();
                 document.execCommand('copy');
-                showToast('Link copied to clipboard!', 'success');
-                closeModal(elements.shareModal);
+                showToast('¡Enlace copiado al portapapeles!', 'success');
+                elements.shareModal.style.display = 'none';
             }
         });
 
-        // App Fullscreen toggle
+        // Fullscreen toggle
         elements.btnFullscreenApp.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(() => {});
@@ -723,25 +968,42 @@
 
         // Sound tip
         elements.btnToggleAllAudio.addEventListener('click', () => {
-            showToast('Tip: Browsers block unmuted autoplay. Click un-mute directly on the video player.', 'info');
+            showToast('Consejo: Los navegadores silencian por defecto los videos múltiples. Hacé clic en desmutear directamente en cada video.', 'info');
         });
 
-        // Close modals with Escape or backdrop click
+        // Escape key to close modals
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                closeModal(elements.batchModal);
-                closeModal(elements.presetsModal);
-                closeModal(elements.shareModal);
+                closeSwapModal();
+                elements.batchModal.style.display = 'none';
+                elements.presetsModal.style.display = 'none';
+                elements.shareModal.style.display = 'none';
             }
         });
 
-        [elements.batchModal, elements.presetsModal, elements.shareModal].forEach(modal => {
+        [elements.swapModal, elements.batchModal, elements.presetsModal, elements.shareModal].forEach(modal => {
+            if (!modal) return;
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
-                    closeModal(modal);
+                    modal.style.display = 'none';
+                    if (modal === elements.swapModal) state.currentSwappingStreamId = null;
                 }
             });
         });
+    }
+
+    function activatePresetTab(tabKey) {
+        elements.presetsTabs.querySelectorAll('.preset-tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabKey);
+        });
+
+        if (tabKey === 'arg') {
+            elements.tabContentArg.style.display = 'block';
+            elements.tabContentWorld.style.display = 'none';
+        } else {
+            elements.tabContentArg.style.display = 'none';
+            elements.tabContentWorld.style.display = 'block';
+        }
     }
 
     function updateInputIcon(value) {
