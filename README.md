@@ -45,16 +45,16 @@ Because MultiView is a 100% client-side application with zero dependencies, you 
 
 ### Option 1: GitHub Pages (Recommended — Built-in & Free)
 
-Since this repository is already on GitHub, hosting it is instant:
+Since this repository is on GitHub, hosting it is instant:
 
-1. Open your repository on GitHub: [`https://github.com/teom275/multiview`](https://github.com/teom275/multiview)
+1. Open your repository on GitHub.
 2. Go to **Settings** > **Pages** (in the left sidebar).
 3. Under **Build and deployment** > **Source**:
    - Select **GitHub Actions** (the included `.github/workflows/deploy.yml` will automatically deploy your site on every push!), OR:
    - Select **Deploy from a branch**, choose branch `main` and folder `/ (root)`, then click **Save**.
 4. In ~1 minute, your site will be live at:
    ```
-   https://teom275.github.io/multiview/
+   https://<your-username>.github.io/<repository-name>/
    ```
 
 ---
@@ -65,13 +65,13 @@ MultiView includes a pre-configured `netlify.toml` with optimized caching and he
 
 1. Create a free account at [Netlify.com](https://www.netlify.com/).
 2. Click **"Add new site"** > **"Import an existing project"**.
-3. Connect your GitHub account and select the `multiview` repository.
+3. Connect your GitHub account and select your repository.
 4. Netlify will detect `netlify.toml` automatically:
    - **Build command**: *(leave blank)*
    - **Publish directory**: `.`
-5. Click **"Deploy MultiView"**. Your app will be live with free SSL and custom domain support at:
+5. Click **"Deploy site"**. Your app will be live with free SSL and custom domain support at:
    ```
-   https://multivew.netlify.app/
+   https://<your-site-name>.netlify.app/
    ```
 
 ---
@@ -81,9 +81,10 @@ MultiView includes a pre-configured `netlify.toml` with optimized caching and he
 No Node.js or build tools required:
 1. Clone or download the repository:
    ```bash
-   git clone https://github.com/teom275/multiview.git
+   git clone <YOUR_REPOSITORY_URL>
    cd multiview
    ```
+   *(or `git clone https://github.com/<your-username>/multiview.git`)*
 2. Double click `index.html` to open in any web browser, or serve it locally with:
    ```bash
    # Using Node.js
