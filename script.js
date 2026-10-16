@@ -46,27 +46,26 @@
             { id: 'reuters_news', name: 'Reuters Live News', type: 'youtube', target: 'qn9w6vrWkyQ', badge: 'World News (EN)', isDefault: false }
         ],
         noticias: [
-            // 6 Principales por defecto
+            // 6 Principales por defecto (Telefe removido por bloqueo de embed, Canal 26 activo 24/7)
             { id: 'tn', name: 'TN (Todo Noticias)', type: 'youtube', target: 'cb12KmMMDJA', badge: 'En Vivo', isDefault: true },
             { id: 'c5n', name: 'C5N', type: 'youtube', target: 'j6oh4Kqz3UM', badge: 'En Vivo', isDefault: true },
             { id: 'lnmas', name: 'LN+ (La Nación)', type: 'youtube', target: '_vf6ulohS-s', badge: 'En Vivo', isDefault: true },
             { id: 'cronica', name: 'Crónica HD', type: 'youtube', target: 'hw4uHyct4vg', badge: 'En Vivo', isDefault: true },
             { id: 'a24', name: 'A24', type: 'youtube', target: 'ArKbAx1K-2U', badge: 'En Vivo', isDefault: true },
-            { id: 'telefe', name: 'Telefe Noticias', type: 'youtube', target: 'XhAYcYpPzTc', badge: 'En Vivo', isDefault: true },
+            { id: 'canal26', name: 'Canal 26 (En Vivo 24/7)', type: 'youtube', target: 'RJe3MMp_3p8', badge: '24 Horas', isDefault: true },
             // Alternativas conocidas
-            { id: 'canal26', name: 'Canal 26', type: 'youtube', target: 'r0aeETOl8O4', badge: '24 Horas', isDefault: false },
             { id: 'eltrece', name: 'El Trece', type: 'youtube', target: 'h_zyAPPJX1k', badge: 'En Vivo', isDefault: false },
             { id: 'tvpublica', name: 'Televisión Pública', type: 'youtube', target: 'Ufzfd0-cw2g', badge: 'En Vivo', isDefault: false },
             { id: 'olga_news', name: 'OLGA (Streaming)', type: 'youtube', target: 'EODBiMEwilU', badge: 'Streaming', isDefault: false },
             { id: 'luzu_news', name: 'LUZU TV (Streaming)', type: 'youtube', target: '42rWQJlio_g', badge: 'Streaming', isDefault: false },
-            { id: 'vorterix_news', name: 'Vorterix', type: 'twitch', target: 'vorterixoficial', badge: 'Radio/Stream', isDefault: false }
+            { id: 'vorterix_news', name: 'Vorterix', type: 'twitch', target: 'vorterixok', badge: 'Radio/Stream', isDefault: false }
         ],
         deportes: [
             // 6 Principales por defecto
             { id: 'tycsports', name: 'TyC Sports', type: 'youtube', target: 'lV0Ks_nOdxE', badge: 'Deportes AR', isDefault: true },
             { id: 'carburando', name: 'Carburando (TC / Automovilismo)', type: 'youtube', target: 'RDlc6UA2sGY', badge: 'Motores', isDefault: true },
             { id: 'dsports', name: 'DSports Radio', type: 'youtube', target: 'ky1GtPrFMek', badge: 'Fútbol/Radio', isDefault: true },
-            { id: 'davo_dep', name: 'Davo Xeneize (Debate)', type: 'twitch', target: 'davoooxeneize', badge: 'Stream Fútbol', isDefault: true },
+            { id: 'davo_dep', name: 'Davo Xeneize (Debate)', type: 'twitch', target: 'davooxeneize', badge: 'Stream Fútbol', isDefault: true },
             { id: 'lacobra_dep', name: 'La Cobra (Debate)', type: 'twitch', target: 'lacobraaa', badge: 'Stream Fútbol', isDefault: true },
             { id: 'river', name: 'River Plate Oficial', type: 'youtube', target: '_ypLae9mH7U', badge: 'Club Oficial', isDefault: true },
             // Alternativas conocidas (Twitch, Kick y YouTube)
@@ -75,38 +74,40 @@
             { id: 'davo_kick', name: 'Davo Xeneize (Kick)', type: 'kick', target: 'davoxeneize', badge: 'Kick Fútbol', isDefault: false },
             { id: 'lacobra_kick', name: 'La Cobra (Kick)', type: 'kick', target: 'lacobra', badge: 'Kick Fútbol', isDefault: false },
             { id: 'boca', name: 'Boca Juniors Oficial', type: 'youtube', target: 'cb12KmMMDJA', badge: 'Club Oficial', isDefault: false },
-            { id: 'parenlamano', name: 'Paren La Mano (Vorterix)', type: 'twitch', target: 'vorterixoficial', badge: 'Deporte & Humor', isDefault: false },
+            { id: 'parenlamano', name: 'Paren La Mano (Vorterix)', type: 'twitch', target: 'vorterixok', badge: 'Deporte & Humor', isDefault: false },
             { id: 'azzaro', name: 'Flavio Azzaro (YouTube)', type: 'youtube', target: 'ArKbAx1K-2U', badge: 'Debate Fútbol', isDefault: false },
             { id: 'espn', name: 'ESPN Fans Highlights', type: 'youtube', target: 'RDlc6UA2sGY', badge: 'Polémica', isDefault: false },
             { id: 'tntsports', name: 'TNT Sports Argentina', type: 'youtube', target: 'lV0Ks_nOdxE', badge: 'Fútbol AR', isDefault: false }
         ],
         creadores: [
-            // 6 Principales por defecto
-            { id: 'spreen', name: 'Spreen', type: 'twitch', target: 'spreen', badge: 'Top Twitch', isDefault: true },
-            { id: 'coscu', name: 'Coscu (Twitch)', type: 'twitch', target: 'coscu', badge: 'Army Leader', isDefault: true },
-            { id: 'davoooxeneize', name: 'Davo Xeneize', type: 'twitch', target: 'davoooxeneize', badge: 'Fútbol & IRL', isDefault: true },
-            { id: 'lacobraaa', name: 'La Cobra', type: 'twitch', target: 'lacobraaa', badge: 'Fútbol & Gaming', isDefault: true },
-            { id: 'luquitas', name: 'Luquitas Rodríguez', type: 'twitch', target: 'luquitasrodriguez', badge: 'Paren La Mano', isDefault: true },
+            // 6 Principales por defecto (Spreen, Coscu Kick, Davo, La Cobra, Luquitas, Carreraaa)
+            { id: 'spreen', name: 'Spreen', type: 'twitch', target: 'elspreen', badge: 'Top Twitch', isDefault: true },
+            { id: 'coscu_kick', name: 'Coscu (Kick)', type: 'kick', target: 'coscu', badge: 'Kick Oficial', isDefault: true },
+            { id: 'davo', name: 'Davo Xeneize', type: 'twitch', target: 'davooxeneize', badge: 'Fútbol & IRL', isDefault: true },
+            { id: 'lacobra', name: 'La Cobra', type: 'twitch', target: 'lacobraaa', badge: 'Fútbol & Gaming', isDefault: true },
+            { id: 'luquitas', name: 'Luquitas Rodríguez', type: 'twitch', target: 'luquitarodriguez', badge: 'Paren La Mano', isDefault: true },
             { id: 'carreraaa', name: 'Carreraaa', type: 'twitch', target: 'carreraaa', badge: 'Top Streamer', isDefault: true },
             // Alternativas conocidas en Kick, Twitch y YouTube
-            { id: 'coscu_kick', name: 'Coscu (Kick)', type: 'kick', target: 'coscu', badge: 'Kick Oficial', isDefault: false },
+            { id: 'coscu_tw', name: 'Coscu (Twitch)', type: 'twitch', target: 'coscu', badge: 'Army Leader', isDefault: false },
             { id: 'brunenger_kick', name: 'Brunenger (Kick)', type: 'kick', target: 'brunenger', badge: 'Top Kick', isDefault: false },
+            { id: 'brunenger_tw', name: 'Brunenger (Twitch)', type: 'twitch', target: 'brunenger', badge: 'IRL / Autos', isDefault: false },
             { id: 'momo_kick', name: 'Momo (Kick)', type: 'kick', target: 'momo', badge: 'Kick', isDefault: false },
+            { id: 'momo_tw', name: 'Momo (Twitch)', type: 'twitch', target: 'momoladinastia', badge: 'Twitch IRL', isDefault: false },
             { id: 'santutu_kick', name: 'Santutu (Kick)', type: 'kick', target: 'santutu', badge: 'Kick', isDefault: false },
+            { id: 'santutu_tw', name: 'Santutu (Twitch)', type: 'twitch', target: 'santutu', badge: 'Gaming / IRL', isDefault: false },
             { id: 'slakun10_kick', name: 'Kun Agüero / Slakun10 (Kick)', type: 'kick', target: 'slakun10', badge: 'Kick Leyenda', isDefault: false },
             { id: 'davo_cr_kick', name: 'Davo Xeneize (Kick)', type: 'kick', target: 'davoxeneize', badge: 'Kick IRL', isDefault: false },
             { id: 'lacobra_cr_kick', name: 'La Cobra (Kick)', type: 'kick', target: 'lacobra', badge: 'Kick Gaming', isDefault: false },
-            { id: 'momo', name: 'Momo (Gerónimo Benavides - Twitch)', type: 'twitch', target: 'geroman', badge: 'IRL / Streamer', isDefault: false },
-            { id: 'brunenger', name: 'Brunenger (Twitch)', type: 'twitch', target: 'brunenger', badge: 'IRL / Autos', isDefault: false },
             { id: 'goncho', name: 'Goncho Banzas', type: 'twitch', target: 'goncho', badge: 'Gaming / IRL', isDefault: false },
             { id: 'litkillah', name: 'Lit Killah', type: 'twitch', target: 'litkillah', badge: 'Música & Stream', isDefault: false },
             { id: 'robleis', name: 'Robleis', type: 'twitch', target: 'robleis', badge: 'Gaming', isDefault: false },
             { id: 'olga_stream', name: 'OLGA (Migue Granados)', type: 'youtube', target: 'EODBiMEwilU', badge: 'Streaming No. 1', isDefault: false },
             { id: 'luzu_stream', name: 'LUZU TV (Nico Occhiato)', type: 'youtube', target: '42rWQJlio_g', badge: 'Streaming', isDefault: false },
-            { id: 'vorterix_stream', name: 'Vorterix Oficial', type: 'twitch', target: 'vorterixoficial', badge: 'Radio/Stream', isDefault: false }
+            { id: 'vorterix_stream', name: 'Vorterix Oficial', type: 'twitch', target: 'vorterixok', badge: 'Radio/Stream', isDefault: false }
         ],
         kick: [
             { id: 'coscu_k', name: 'Coscu', type: 'kick', target: 'coscu', badge: 'Kick Oficial', isDefault: false },
+            { id: 'spreen_k', name: 'Spreen (Kick)', type: 'kick', target: 'spreen', badge: 'Kick Oficial', isDefault: false },
             { id: 'brunenger_k', name: 'Brunenger', type: 'kick', target: 'brunenger', badge: 'Top Kick AR', isDefault: false },
             { id: 'momo_k', name: 'Momo (Gerónimo Benavides)', type: 'kick', target: 'momo', badge: 'IRL / Viajes', isDefault: false },
             { id: 'santutu_k', name: 'Santutu', type: 'kick', target: 'santutu', badge: 'Gaming / IRL', isDefault: false },
@@ -268,19 +269,25 @@
         }
 
         if (channelName && !['directory', 'videos', 'downloads'].includes(channelName)) {
+            // Normalizar alias comunes a sus identificadores oficiales en Twitch
+            const TWITCH_ALIASES = {
+                'spreen': 'elspreen',
+                'davoxeneize': 'davooxeneize',
+                'davoooxeneize': 'davooxeneize',
+                'luquitasrodriguez': 'luquitarodriguez',
+                'vorterix': 'vorterixok',
+                'vorterixoficial': 'vorterixok',
+                'momo': 'momoladinastia'
+            };
+            if (TWITCH_ALIASES[channelName]) {
+                channelName = TWITCH_ALIASES[channelName];
+            }
+
             const parentHost = getTwitchHostParent();
-            let twitchUrl = `https://player.twitch.tv/?channel=${channelName}&parent=${parentHost}&autoplay=true&muted=false`;
-            
-            // Parents adicionales para garantizar reproducción en Netlify y GitHub Pages
-            if (parentHost !== 'localhost') {
-                twitchUrl += `&parent=localhost`;
-            }
-            if (parentHost !== 'multivew.netlify.app') {
-                twitchUrl += `&parent=multivew.netlify.app`;
-            }
-            if (parentHost !== 'teom275.github.io') {
-                twitchUrl += `&parent=teom275.github.io`;
-            }
+            // Twitch exige estrictamente el host actual del embed. Si se pasan múltiples parents
+            // no anidados o inexistentes, el handshake de clasificación de contenido falla y arroja
+            // el error "No se ha podido determinar la clasificación del contenido".
+            const twitchUrl = `https://player.twitch.tv/?channel=${channelName}&parent=${parentHost}&autoplay=true&muted=true`;
 
             return {
                 id: 'stream_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
@@ -375,7 +382,9 @@
                     const loaded = [];
                     for (const item of items) {
                         if (item.startsWith('yt:')) {
-                            const parsed = parseStreamUrl(item.substring(3));
+                            let ytTarget = item.substring(3);
+                            if (ytTarget === 'XhAYcYpPzTc' || ytTarget === 'telefe') ytTarget = 'RJe3MMp_3p8';
+                            const parsed = parseStreamUrl(ytTarget);
                             if (parsed) loaded.push(parsed);
                         } else if (item.startsWith('tw:')) {
                             const parsed = parseStreamUrl('twitch:' + item.substring(3));
@@ -384,7 +393,9 @@
                             const parsed = parseStreamUrl('https://kick.com/' + item.substring(5));
                             if (parsed) loaded.push(parsed);
                         } else {
-                            const parsed = parseStreamUrl(item);
+                            let cleanItem = item;
+                            if (cleanItem.includes('XhAYcYpPzTc')) cleanItem = 'RJe3MMp_3p8';
+                            const parsed = parseStreamUrl(cleanItem);
                             if (parsed) loaded.push(parsed);
                         }
                     }
@@ -414,15 +425,24 @@
                 if (Array.isArray(parsed) && parsed.length > 0) {
                     state.streams = parsed.map(item => {
                         let reconstructed;
-                        if (item.type === 'twitch') {
-                            reconstructed = parseStreamUrl(`https://twitch.tv/${item.identifier}`, item.title);
-                        } else if (item.type === 'kick') {
-                            reconstructed = parseStreamUrl(`https://kick.com/${item.identifier}`, item.title);
-                        } else {
-                            reconstructed = parseStreamUrl(item.identifier, item.title);
+                        // Auto-migración si el usuario tenía Telefe guardado localmente
+                        let targetId = item.identifier;
+                        let itemTitle = item.title;
+                        if (targetId === 'XhAYcYpPzTc' || targetId === 'telefe' || (itemTitle && itemTitle.toLowerCase().includes('telefe'))) {
+                            targetId = 'RJe3MMp_3p8';
+                            itemTitle = 'Canal 26 (En Vivo 24/7)';
+                            item.type = 'youtube';
                         }
-                        if (reconstructed && item.title) {
-                            reconstructed.title = item.title;
+
+                        if (item.type === 'twitch') {
+                            reconstructed = parseStreamUrl(`https://twitch.tv/${targetId}`, itemTitle);
+                        } else if (item.type === 'kick') {
+                            reconstructed = parseStreamUrl(`https://kick.com/${targetId}`, itemTitle);
+                        } else {
+                            reconstructed = parseStreamUrl(targetId, itemTitle);
+                        }
+                        if (reconstructed && itemTitle) {
+                            reconstructed.title = itemTitle;
                         }
                         return reconstructed;
                     }).filter(Boolean);
@@ -628,7 +648,7 @@
                     <button type="button" class="card-btn btn-reload" title="Recargar reproductor">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
                     </button>
-                    <button type="button" class="card-btn btn-external" title="Abrir en ${badgeLabel}">
+                    <button type="button" class="card-btn btn-external" title="Abrir directamente en ${badgeLabel} (por si requiere inicio de sesión)">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     </button>
                     <button type="button" class="card-btn btn-fullscreen" title="Pantalla completa">
@@ -644,8 +664,7 @@
                     src="${stream.embedUrl}" 
                     title="${escapeHtml(stream.title)}"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                    loading="lazy">
+                    allowfullscreen>
                 </iframe>
             </div>
         `;

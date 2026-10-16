@@ -17,9 +17,9 @@
 ## ✨ Features
 
 - 🇦🇷 **Packs Temáticos Curados (6 Canales + Alternativas)**:
-  - 📰 **Noticias AR**: TN, C5N, LN+, Crónica HD, A24, Telefe Noticias (+ Canal 26, El Trece, TV Pública, OLGA, LUZU, Vorterix).
+  - 📰 **Noticias AR**: TN, C5N, LN+, Crónica HD, A24, Canal 26 (+ El Trece, TV Pública, OLGA, LUZU, Vorterix).
   - ⚽ **Deportes AR**: TyC Sports, Carburando (Automovilismo), DSports Radio, Davo Xeneize, La Cobra, River Plate Oficial (+ Boca Juniors, Flavio Azzaro *El Loco y el Cuerdo* en Kick, Kun Agüero *Slakun10* en Kick, ESPN, TNT Sports).
-  - 🎮 **Top Creadores AR**: Spreen, Coscu, Davo, La Cobra, Luquitas Rodríguez, Carreraaa (+ streamers en **Kick** como Brunenger, Momo, Santutu, Kun Agüero, OLGA, LUZU).
+  - 🎮 **Top Creadores AR**: Spreen, Coscu (Kick), Davo Xeneize, La Cobra, Luquitas Rodríguez, Carreraaa (+ streamers en **Kick** como Brunenger, Momo, Santutu, Kun Agüero, OLGA, LUZU).
   - 📈 **Finanzas & Mercados**: Bloomberg TV, Yahoo Finance, CNBC TV, CoinDesk Crypto, Reuters Business, Euronews Business (+ Ámbito Financiero, InvertirOnline, Ramiro Marra, Financial Times).
   - 🌍 **Noticias Internacionales**: Sky News, Al Jazeera English, DW News, France 24, ABC News Live, NBC News NOW (+ Euronews, Reuters World, BBC News, CNN Live).
 - ⚡ **Modo OLED True Black**: Diseñado específicamente para pantallas OLED y AMOLED con fondo negro puro `#000000` (los píxeles se apagan físicamente para contraste infinito y 0% fuga de luz).
